@@ -1,5 +1,5 @@
 import { LitElement, html, css } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
+import { customElement, state } from 'lit/decorators.js';
 import '@material/web/textfield/outlined-text-field.js';
 import '@material/web/list/list.js';
 import '@material/web/list/list-item.js';
@@ -19,6 +19,8 @@ export class ShoppingList extends LitElement {
 
   @state()
   private filter = '';
+
+  private readonly mode: string = import.meta.env.MODE ?? '';
 
   connectedCallback() {
     super.connectedCallback();
@@ -51,6 +53,7 @@ export class ShoppingList extends LitElement {
           </md-list-item>`,
         )}
       </md-list>
+      <div>Mode: ${this.mode}</div>
     `;
   }
 }
