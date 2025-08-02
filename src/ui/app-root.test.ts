@@ -43,6 +43,23 @@ describe('app-root component', () => {
     window.fetch = async () => new Response('[]', { status: 200 }) as any;
   });
 
+  it('toggles the navigation drawer from the menu button', async () => {
+    const el = await fixture<HTMLDivElement>(html`<app-root></app-root>`);
+    await el.updateComplete;
+
+    const button = el.shadowRoot?.querySelector(
+      'md-icon-button',
+    ) as HTMLElement;
+    const drawer = el.shadowRoot?.querySelector(
+      'md-navigation-drawer',
+    ) as HTMLElement & { opened: boolean };
+
+    button.click();
+    expect(drawer.opened).toBe(true);
+    button.click();
+    expect(drawer.opened).toBe(false);
+  });
+
   it('navigates to config page', async () => {
     const el = await fixture<HTMLDivElement>(html`<app-root></app-root>`);
     await el.updateComplete;

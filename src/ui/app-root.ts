@@ -31,6 +31,11 @@ export class AppRoot extends LitElement {
 
     md-navigation-drawer {
       background-color: #bbdefb;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      z-index: 1000;
     }
 
     footer {
@@ -63,8 +68,8 @@ export class AppRoot extends LitElement {
     ]);
   }
 
-  private openDrawer = () => {
-    this.drawer.opened = true;
+  private toggleDrawer = () => {
+    this.drawer.opened = !this.drawer.opened;
   };
 
   private navigate(path: string) {
@@ -75,7 +80,7 @@ export class AppRoot extends LitElement {
   render() {
     return html`
       <header class="top-bar">
-        <md-icon-button @click=${this.openDrawer}>
+        <md-icon-button @click=${this.toggleDrawer}>
           <svg slot="icon" viewBox="0 0 24 24">
             <path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"></path>
           </svg>
