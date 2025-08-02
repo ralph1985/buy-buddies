@@ -45,6 +45,11 @@ export class AppRoot extends LitElement {
       padding: 16px;
     }
 
+    .top-bar md-icon-button,
+    .drawer-header md-icon-button {
+      --md-icon-button-icon-color: black;
+    }
+
     footer {
       position: fixed;
       bottom: 0;
