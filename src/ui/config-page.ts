@@ -8,6 +8,7 @@ export class ConfigPage extends LitElement {
     :host {
       display: block;
       padding: 16px;
+      background-color: #e1bee7;
     }
 
     h1 {

@@ -11,6 +11,7 @@ export class ShoppingList extends LitElement {
     :host {
       display: block;
       padding: 16px;
+      background-color: #fff9c4;
     }
   `;
 
