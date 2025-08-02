@@ -17,7 +17,7 @@ if (!customElements.get('md-navigation-drawer')) {
   customElements.define(
     'md-navigation-drawer',
     class extends HTMLElement {
-      open = false;
+      opened = false;
     },
   );
 }
@@ -48,8 +48,8 @@ describe('app-root component', () => {
 
     const drawer = el.shadowRoot?.querySelector(
       'md-navigation-drawer',
-    ) as HTMLElement & { open: boolean };
-    drawer.open = true;
+    ) as HTMLElement & { opened: boolean };
+    drawer.opened = true;
     const items = drawer.querySelectorAll('md-list-item');
     (items[1] as HTMLElement).click();
     await new Promise((r) => setTimeout(r));

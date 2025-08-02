@@ -16,6 +16,7 @@ export class AppRoot extends LitElement {
       align-items: center;
       gap: 8px;
       padding: 16px;
+      background-color: #ffcdd2;
     }
 
     .title {
@@ -24,11 +25,16 @@ export class AppRoot extends LitElement {
 
     main {
       padding: 16px;
+      background-color: #c8e6c9;
+    }
+
+    md-navigation-drawer {
+      background-color: #bbdefb;
     }
   `;
 
   @query('md-navigation-drawer')
-  private drawer!: HTMLElement & { open: boolean };
+  private drawer!: HTMLElement & { opened: boolean };
 
   private router!: Router;
 
@@ -42,13 +48,13 @@ export class AppRoot extends LitElement {
     ]);
   }
 
-  private openDrawer() {
-    this.drawer.open = true;
-  }
+  private openDrawer = () => {
+    this.drawer.opened = true;
+  };
 
   private navigate(path: string) {
     Router.go(path);
-    this.drawer.open = false;
+    this.drawer.opened = false;
   }
 
   render() {
