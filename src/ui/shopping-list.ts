@@ -21,8 +21,6 @@ export class ShoppingList extends LitElement {
   @state()
   private filter = '';
 
-  private readonly viteEnv: string = import.meta.env.VITE_ENV ?? '';
-
   connectedCallback() {
     super.connectedCallback();
     this.load();
@@ -54,7 +52,6 @@ export class ShoppingList extends LitElement {
           </md-list-item>`,
         )}
       </md-list>
-      <div>Env: ${this.viteEnv}</div>
     `;
   }
 }
