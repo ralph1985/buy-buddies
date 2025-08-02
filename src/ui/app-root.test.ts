@@ -52,8 +52,9 @@ describe('app-root component', () => {
     drawer.open = true;
     const items = drawer.querySelectorAll('md-list-item');
     (items[1] as HTMLElement).click();
-    await el.updateComplete;
+    await new Promise((r) => setTimeout(r));
 
+    expect(window.location.pathname).toBe('/config');
     expect(el.shadowRoot?.textContent).toContain('Configuración');
   });
 });
