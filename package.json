@@ -5,6 +5,7 @@
   "scripts": {
     "test": "vitest",
     "dev": "vite",
+    "prebuild": "npm test",
     "build": "vite build"
   },
   "keywords": [],
