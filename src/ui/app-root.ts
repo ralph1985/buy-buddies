@@ -38,6 +38,13 @@ export class AppRoot extends LitElement {
       z-index: 1000;
     }
 
+    .drawer-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px;
+    }
+
     footer {
       position: fixed;
       bottom: 0;
@@ -89,6 +96,16 @@ export class AppRoot extends LitElement {
       </header>
 
       <md-navigation-drawer type="modal">
+        <div class="drawer-header">
+          <div class="title">Menú</div>
+          <md-icon-button @click=${this.toggleDrawer}>
+            <svg slot="icon" viewBox="0 0 24 24">
+              <path
+                d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+              ></path>
+            </svg>
+          </md-icon-button>
+        </div>
         <md-list>
           <md-list-item @click=${() => this.navigate('/')}>Lista</md-list-item>
           <md-list-item @click=${() => this.navigate('/config')}>Configuración</md-list-item>

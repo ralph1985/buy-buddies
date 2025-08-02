@@ -48,7 +48,7 @@ describe('app-root component', () => {
     await el.updateComplete;
 
     const button = el.shadowRoot?.querySelector(
-      'md-icon-button',
+      'header md-icon-button',
     ) as HTMLElement;
     const drawer = el.shadowRoot?.querySelector(
       'md-navigation-drawer',
@@ -75,5 +75,27 @@ describe('app-root component', () => {
     expect(window.location.pathname).toBe('/config');
     expect(el.shadowRoot?.textContent).toContain('Configuración');
     expect(el.shadowRoot?.textContent).toContain('Env: test');
+  });
+
+  it('closes the navigation drawer from the close button and shows a title', async () => {
+    const el = await fixture<HTMLDivElement>(html`<app-root></app-root>`);
+    await el.updateComplete;
+
+    const menuButton = el.shadowRoot?.querySelector(
+      'header md-icon-button',
+    ) as HTMLElement;
+    const drawer = el.shadowRoot?.querySelector(
+      'md-navigation-drawer',
+    ) as HTMLElement & { opened: boolean };
+
+    menuButton.click();
+    expect(drawer.opened).toBe(true);
+
+    const title = drawer.querySelector('.title') as HTMLElement;
+    expect(title?.textContent).toContain('Menú');
+
+    const closeButton = drawer.querySelector('md-icon-button') as HTMLElement;
+    closeButton.click();
+    expect(drawer.opened).toBe(false);
   });
 });
