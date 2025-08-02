@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { customElement } from 'lit/decorators.js';
+import { Router } from '@vaadin/router';
 
 @customElement('config-page')
 export class ConfigPage extends LitElement {
@@ -15,8 +16,12 @@ export class ConfigPage extends LitElement {
     }
   `;
 
+  private goHome() {
+    Router.go('/');
+  }
+
   render() {
-    return html`<h1>Configuración</h1>`;
+    return html`<h1>Configuración</h1><button @click=${this.goHome}>Volver</button>`;
   }
 }
 

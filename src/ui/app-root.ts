@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
-import { customElement, state, query } from 'lit/decorators.js';
+import { customElement, query } from 'lit/decorators.js';
+import { Router } from '@vaadin/router';
 import '@material/web/iconbutton/icon-button.js';
 import '@material/web/labs/navigationdrawer/navigation-drawer.js';
 import '@material/web/list/list.js';
@@ -26,18 +27,27 @@ export class AppRoot extends LitElement {
     }
   `;
 
-  @state()
-  private page: 'shopping' | 'config' = 'shopping';
-
   @query('md-navigation-drawer')
   private drawer!: HTMLElement & { open: boolean };
+
+  private router!: Router;
+
+  firstUpdated() {
+    this.router = new Router(
+      this.shadowRoot!.getElementById('outlet') as HTMLElement,
+    );
+    this.router.setRoutes([
+      { path: '/', component: 'shopping-list' },
+      { path: '/config', component: 'config-page' },
+    ]);
+  }
 
   private openDrawer() {
     this.drawer.open = true;
   }
 
-  private navigate(page: 'shopping' | 'config') {
-    this.page = page;
+  private navigate(path: string) {
+    Router.go(path);
     this.drawer.open = false;
   }
 
@@ -54,15 +64,13 @@ export class AppRoot extends LitElement {
 
       <md-navigation-drawer type="modal">
         <md-list>
-          <md-list-item @click=${() => this.navigate('shopping')}>Lista</md-list-item>
-          <md-list-item @click=${() => this.navigate('config')}>Configuración</md-list-item>
+          <md-list-item @click=${() => this.navigate('/')}>Lista</md-list-item>
+          <md-list-item @click=${() => this.navigate('/config')}>Configuración</md-list-item>
         </md-list>
       </md-navigation-drawer>
 
       <main>
-        ${this.page === 'config'
-          ? html`<config-page></config-page>`
-          : html`<shopping-list></shopping-list>`}
+        <div id="outlet"></div>
       </main>
     `;
   }
