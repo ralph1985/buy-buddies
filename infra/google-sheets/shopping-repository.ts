@@ -20,9 +20,11 @@ export class GoogleSheetsShoppingRepository implements ShoppingRepository {
     return rows.map((r: any) => ({
       id: r.id,
       name: r.name,
+      quantity: r.quantity,
+      unit: r.unit,
       group: r.group,
       category: r.category,
-      assignedTo: r.assignedTo,
+      notes: r.notes,
       bought: r.bought === 'TRUE' || r.bought === true,
     }));
   }
