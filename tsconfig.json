@@ -7,9 +7,10 @@
 
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
-    "module": "es2020",
+    "module": "nodenext",
     "target": "es2020",
-    "types": [],
+    "moduleResolution": "nodenext",
+    "types": ["node"],
     // For nodejs:
     // "lib": ["esnext"],
     // "types": ["node"],
@@ -46,5 +47,6 @@
 
     "esModuleInterop": true,
     "resolveJsonModule": true,
-  }
+  },
+  "exclude": ["src", "**/*.test.ts"]
 }
