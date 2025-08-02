@@ -1,8 +1,10 @@
 export interface ShoppingItem {
   id: string;
   name: string;
+  quantity: string;
+  unit: string;
   group: string;
   category: string;
-  assignedTo?: string;
+  notes?: string;
   bought: boolean;
 }
