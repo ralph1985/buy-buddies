@@ -14,6 +14,7 @@
   "type": "module",
   "dependencies": {
     "@material/web": "^2.3.0",
+    "google-auth-library": "^10.2.0",
     "google-spreadsheet": "^4.1.5",
     "lit": "^3.3.1"
   },
@@ -21,6 +22,7 @@
     "@open-wc/testing": "^4.0.0",
     "@testing-library/dom": "^10.4.1",
     "@types/node": "^24.1.0",
+    "@vercel/node": "^5.3.8",
     "happy-dom": "^18.0.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.2",

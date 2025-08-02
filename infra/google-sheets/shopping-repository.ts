@@ -1,18 +1,23 @@
 import { GoogleSpreadsheet } from 'google-spreadsheet';
-import { ShoppingRepository } from '../../core/shopping/ports/shopping-repository.js';
-import { ShoppingItem } from '../../core/shopping/models/shopping-item.js';
+import { JWT } from 'google-auth-library';
+import type { ShoppingRepository } from '../../core/shopping/ports/shopping-repository.js';
+import type { ShoppingItem } from '../../core/shopping/models/shopping-item.js';
 
 export class GoogleSheetsShoppingRepository implements ShoppingRepository {
   async getItems(): Promise<ShoppingItem[]> {
-    const doc = new GoogleSpreadsheet(process.env.GOOGLE_SHEET_ID as string);
-    await doc.useServiceAccountAuth({
-      client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL as string,
-      private_key: (process.env.GOOGLE_PRIVATE_KEY as string).replace(/\\n/g, '\n'),
+    const auth = new JWT({
+      email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL as string,
+      key: (process.env.GOOGLE_PRIVATE_KEY as string).replace(/\\n/g, '\n'),
+      scopes: ['https://www.googleapis.com/auth/spreadsheets'],
     });
+    const doc = new GoogleSpreadsheet(
+      process.env.GOOGLE_SHEET_ID as string,
+      auth,
+    );
     await doc.loadInfo();
-    const sheet = doc.sheetsByIndex[0];
+    const sheet = doc.sheetsByIndex[0]!;
     const rows = await sheet.getRows();
-    return rows.map((r) => ({
+    return rows.map((r: any) => ({
       id: r.id,
       name: r.name,
       group: r.group,

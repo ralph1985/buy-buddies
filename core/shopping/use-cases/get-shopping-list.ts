@@ -1,5 +1,5 @@
-import { ShoppingRepository } from '../ports/shopping-repository.js';
-import { ShoppingItem } from '../models/shopping-item.js';
+import type { ShoppingRepository } from '../ports/shopping-repository.js';
+import type { ShoppingItem } from '../models/shopping-item.js';
 
 export async function getShoppingList(
   repo: ShoppingRepository,

@@ -1,5 +1,5 @@
-import { ShoppingRepository } from '../../core/shopping/ports/shopping-repository.js';
-import { ShoppingItem } from '../../core/shopping/models/shopping-item.js';
+import type { ShoppingRepository } from '../../core/shopping/ports/shopping-repository.js';
+import type { ShoppingItem } from '../../core/shopping/models/shopping-item.js';
 
 const items: ShoppingItem[] = [
   {
