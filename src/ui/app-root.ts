@@ -25,11 +25,22 @@ export class AppRoot extends LitElement {
 
     main {
       padding: 16px;
+      padding-bottom: 64px;
       background-color: #c8e6c9;
     }
 
     md-navigation-drawer {
       background-color: #bbdefb;
+    }
+
+    footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: 8px 16px;
+      background-color: #eeeeee;
+      box-sizing: border-box;
     }
   `;
 
@@ -37,6 +48,10 @@ export class AppRoot extends LitElement {
   private drawer!: HTMLElement & { opened: boolean };
 
   private router!: Router;
+
+  private get viteEnv(): string {
+    return import.meta.env.VITE_ENV ?? '';
+  }
 
   firstUpdated() {
     this.router = new Router(
@@ -78,6 +93,8 @@ export class AppRoot extends LitElement {
       <main>
         <div id="outlet"></div>
       </main>
+
+      <footer>Env: ${this.viteEnv}</footer>
     `;
   }
 }

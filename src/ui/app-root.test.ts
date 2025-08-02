@@ -39,6 +39,7 @@ declare global {
 
 describe('app-root component', () => {
   beforeEach(() => {
+    import.meta.env.VITE_ENV = 'test';
     window.fetch = async () => new Response('[]', { status: 200 }) as any;
   });
 
@@ -56,5 +57,6 @@ describe('app-root component', () => {
 
     expect(window.location.pathname).toBe('/config');
     expect(el.shadowRoot?.textContent).toContain('Configuración');
+    expect(el.shadowRoot?.textContent).toContain('Env: test');
   });
 });
