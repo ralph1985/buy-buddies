@@ -4,16 +4,15 @@ import type { ShoppingRepository } from '../../core/shopping/ports/shopping-repo
 import type { ShoppingItem } from '../../core/shopping/models/shopping-item.js';
 
 export class GoogleSheetsShoppingRepository implements ShoppingRepository {
+  constructor(private sheetId: string) {}
+
   async getItems(): Promise<ShoppingItem[]> {
     const auth = new JWT({
       email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL as string,
       key: (process.env.GOOGLE_PRIVATE_KEY as string).replace(/\\n/g, '\n'),
       scopes: ['https://www.googleapis.com/auth/spreadsheets'],
     });
-    const doc = new GoogleSpreadsheet(
-      process.env.GOOGLE_SHEET_ID as string,
-      auth,
-    );
+    const doc = new GoogleSpreadsheet(this.sheetId, auth);
     await doc.loadInfo();
     const sheet = doc.sheetsByIndex[0]!;
     const rows = await sheet.getRows();

@@ -12,6 +12,7 @@ if (!customElements.get('md-outlined-text-field')) {
 
 describe('shopping-list component', () => {
   it('renders items', async () => {
+    localStorage.clear();
     window.fetch = vi.fn().mockResolvedValue(
       new Response(JSON.stringify([]), { status: 200 }),
     ) as any;

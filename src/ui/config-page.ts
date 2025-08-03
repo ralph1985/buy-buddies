@@ -1,6 +1,7 @@
 import { LitElement, html, css } from 'lit';
-import { customElement } from 'lit/decorators.js';
+import { customElement, state } from 'lit/decorators.js';
 import { Router } from '@vaadin/router';
+import '@material/web/textfield/outlined-text-field.js';
 
 @customElement('config-page')
 export class ConfigPage extends LitElement {
@@ -17,12 +18,33 @@ export class ConfigPage extends LitElement {
     }
   `;
 
+  @state()
+  private googleSheetId = '';
+
+  connectedCallback() {
+    super.connectedCallback();
+    this.googleSheetId = localStorage.getItem('googleSheetId') ?? '';
+  }
+
+  private onInput(e: Event) {
+    this.googleSheetId = (e.target as HTMLInputElement).value;
+    localStorage.setItem('googleSheetId', this.googleSheetId);
+  }
+
   private goHome() {
     Router.go('/');
   }
 
   render() {
-    return html`<h1>Configuración</h1><button @click=${this.goHome}>Volver</button>`;
+    return html`
+      <h1>Configuración</h1>
+      <md-outlined-text-field
+        label="Google Sheet ID"
+        .value=${this.googleSheetId}
+        @input=${this.onInput}
+      ></md-outlined-text-field>
+      <button @click=${this.goHome}>Volver</button>
+    `;
   }
 }
 
