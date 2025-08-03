@@ -1,4 +1,5 @@
 import { LitElement, html, css } from 'lit';
+import { repeat } from 'lit/directives/repeat.js';
 import { customElement, property } from 'lit/decorators.js';
 import type { ShoppingItem } from '../../core/shopping/models/shopping-item.js';
 import './shopping-row.js';
@@ -33,7 +34,11 @@ export class ShoppingTable extends LitElement {
         </tr>
       </thead>
       <tbody>
-        ${this.items.map((item) => html`<shopping-row .item=${item}></shopping-row>`)}
+        ${repeat(
+          this.items,
+          (item) => item.id,
+          (item) => html`<tr><shopping-row .item=${item}></shopping-row></tr>`
+        )}
       </tbody>
     </table>`;
   }

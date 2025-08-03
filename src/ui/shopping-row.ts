@@ -26,14 +26,14 @@ export class ShoppingRow extends LitElement {
       return html``;
     }
     const { name, quantity, unit, group, category, notes } = this.item;
-    return html`<tr>
+    return html`
       <td>${name}</td>
       <td>${quantity}</td>
       <td>${unit}</td>
       <td>${group}</td>
       <td>${category}</td>
       <td>${notes}</td>
-    </tr>`;
+    `;
   }
 }
 
