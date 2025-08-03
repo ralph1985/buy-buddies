@@ -1,7 +1,8 @@
 import { LitElement, html, css } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import '@material/web/textfield/outlined-text-field.js';
-import './shopping-table.js';
+import { repeat } from 'lit/directives/repeat.js';
+import './shopping-item.js';
 import type { ShoppingItem } from '../../core/shopping/models/shopping-item.js';
 
 @customElement('shopping-list')
@@ -47,7 +48,13 @@ export class ShoppingList extends LitElement {
         label="Search"
         @input=${this.onSearch}
       ></md-outlined-text-field>
-      <shopping-table .items=${filtered}></shopping-table>
+      <div>
+        ${repeat(
+          filtered,
+          (item) => item.id,
+          (item) => html`<shopping-item .item=${item}></shopping-item>`,
+        )}
+      </div>
     `;
   }
 }
