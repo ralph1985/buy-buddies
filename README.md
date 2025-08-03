@@ -15,5 +15,9 @@ BuyBuddies is a collaborative shopping list app built with TypeScript, following
 3. Start Vercel development server (if needed): `vercel dev`
 
 Environment variables are required for Google Sheets access:
-`GOOGLE_SHEET_ID`, `GOOGLE_SERVICE_ACCOUNT_EMAIL`, `GOOGLE_PRIVATE_KEY`, `USE_MOCK_REPO`.
+`GOOGLE_SERVICE_ACCOUNT_EMAIL`, `GOOGLE_PRIVATE_KEY`.
+
+The Google Sheet ID is configured in the app's settings page and stored in
+`localStorage`. If no ID is provided, the application will use a mock
+repository.
 

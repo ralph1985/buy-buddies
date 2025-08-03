@@ -41,6 +41,7 @@ describe('app-root component', () => {
   beforeEach(() => {
     import.meta.env.VITE_ENV = 'test';
     window.fetch = async () => new Response('[]', { status: 200 }) as any;
+    localStorage.clear();
   });
 
   it('toggles the navigation drawer from the menu button', async () => {
