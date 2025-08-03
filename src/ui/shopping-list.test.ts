@@ -29,7 +29,19 @@ describe('shopping-list component', () => {
         notes: '',
         bought: false,
       },
+      {
+        id: '2',
+        name: 'Milk',
+        quantity: '1',
+        unit: 'L',
+        group: '',
+        category: 'Dairy',
+        notes: '',
+        bought: false,
+      },
     ];
+    await el.updateComplete;
+    (el as any).filter = 'water';
     await el.updateComplete;
     await new Promise((r) => setTimeout(r));
     const items = el.shadowRoot!.querySelectorAll('shopping-item');
@@ -37,5 +49,7 @@ describe('shopping-list component', () => {
     const item = items[0] as any;
     await item.updateComplete;
     expect(item.shadowRoot!.textContent).toContain('Water');
+    const total = el.shadowRoot!.querySelector('.total')!;
+    expect(total.textContent).toContain('Total de productos: 1 de 2');
   });
 });

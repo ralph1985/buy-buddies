@@ -48,6 +48,9 @@ export class ShoppingList extends LitElement {
         label="Search"
         @input=${this.onSearch}
       ></md-outlined-text-field>
+      <div class="total">
+        Total de productos: ${filtered.length} de ${this.items.length}
+      </div>
       <div>
         ${repeat(
           filtered,
