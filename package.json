@@ -14,7 +14,7 @@
   "type": "module",
   "dependencies": {
     "@material/web": "^2.3.0",
-    "@vaadin/router": "^1.7.5",
+    "@vaadin/router": "^2.0.0",
     "google-auth-library": "^10.2.0",
     "google-spreadsheet": "^4.1.5",
     "lit": "^3.3.1"
