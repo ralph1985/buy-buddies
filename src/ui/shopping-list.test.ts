@@ -32,8 +32,10 @@ describe('shopping-list component', () => {
     ];
     await el.updateComplete;
     await new Promise((r) => setTimeout(r));
-    const table = el.shadowRoot!.querySelector('shopping-table') as any;
-    await table.updateComplete;
-    expect(table.shadowRoot.textContent).toContain('Water');
+    const items = el.shadowRoot!.querySelectorAll('shopping-item');
+    expect(items.length).toBe(1);
+    const item = items[0] as any;
+    await item.updateComplete;
+    expect(item.shadowRoot!.textContent).toContain('Water');
   });
 });
