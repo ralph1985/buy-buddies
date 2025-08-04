@@ -2,6 +2,7 @@ import { LitElement, html, css } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import { Router } from '@vaadin/router';
 import '@material/web/textfield/outlined-text-field.js';
+import { t, getLang, setLang, LangController, type Lang } from './i18n.js';
 
 @customElement('config-page')
 export class ConfigPage extends LitElement {
@@ -21,9 +22,15 @@ export class ConfigPage extends LitElement {
   @state()
   private googleSheetId = '';
 
+  @state()
+  private language: Lang = getLang();
+
+  private lang = new LangController(this);
+
   connectedCallback() {
     super.connectedCallback();
     this.googleSheetId = localStorage.getItem('googleSheetId') ?? '';
+    this.language = getLang();
   }
 
   private onInput(e: Event) {
@@ -35,15 +42,28 @@ export class ConfigPage extends LitElement {
     Router.go('/');
   }
 
+  private onLangChange(e: Event) {
+    const lang = (e.target as HTMLSelectElement).value as Lang;
+    setLang(lang);
+    this.language = lang;
+  }
+
   render() {
     return html`
-      <h1>Configuración</h1>
+      <h1>${t('config')}</h1>
       <md-outlined-text-field
-        label="Google Sheet ID"
+        .label=${t('sheetId')}
         .value=${this.googleSheetId}
         @input=${this.onInput}
       ></md-outlined-text-field>
-      <button @click=${this.goHome}>Volver</button>
+      <div>
+        <label>${t('language')}:</label>
+        <select @change=${this.onLangChange} .value=${this.language}>
+          <option value="es">Español</option>
+          <option value="en">English</option>
+        </select>
+      </div>
+      <button @click=${this.goHome}>${t('back')}</button>
     `;
   }
 }

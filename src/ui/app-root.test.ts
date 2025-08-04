@@ -1,6 +1,7 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { fixture, html } from '@open-wc/testing';
 import { vi } from 'vitest';
+import { setLang } from './i18n.js';
 
 vi.mock('@material/web/iconbutton/icon-button.js', () => ({}));
 vi.mock('@material/web/labs/navigationdrawer/navigation-drawer.js', () => ({}));
@@ -42,6 +43,7 @@ describe('app-root component', () => {
     import.meta.env.VITE_ENV = 'test';
     window.fetch = async () => new Response('[]', { status: 200 }) as any;
     localStorage.clear();
+    setLang('es');
   });
 
   it('toggles the navigation drawer from the menu button', async () => {
@@ -76,6 +78,15 @@ describe('app-root component', () => {
     expect(window.location.pathname).toBe('/config');
     expect(el.shadowRoot?.textContent).toContain('Configuración');
     expect(el.shadowRoot?.textContent).toContain('Env: test');
+  });
+
+  it('renders english texts when language is set', async () => {
+    setLang('en');
+    const el = await fixture<HTMLDivElement>(html`<app-root></app-root>`);
+    await el.updateComplete;
+    const text = el.shadowRoot?.textContent || '';
+    expect(text).toContain('Menu');
+    expect(text).toContain('Settings');
   });
 
   it('closes the navigation drawer from the close button and shows a title', async () => {

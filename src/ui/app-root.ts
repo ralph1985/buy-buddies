@@ -7,6 +7,7 @@ import '@material/web/list/list.js';
 import '@material/web/list/list-item.js';
 import './shopping-list.js';
 import './config-page.js';
+import { t, LangController } from './i18n.js';
 
 @customElement('app-root')
 export class AppRoot extends LitElement {
@@ -65,6 +66,7 @@ export class AppRoot extends LitElement {
   private drawer!: HTMLElement & { opened: boolean };
 
   private router!: Router;
+  private lang = new LangController(this);
 
   private get viteEnv(): string {
     return import.meta.env.VITE_ENV ?? '';
@@ -102,7 +104,7 @@ export class AppRoot extends LitElement {
 
       <md-navigation-drawer type="modal">
         <div class="drawer-header">
-          <div class="title">Menú</div>
+          <div class="title">${t('menu')}</div>
           <md-icon-button @click=${this.toggleDrawer}>
             <svg slot="icon" viewBox="0 0 24 24">
               <path
@@ -112,8 +114,10 @@ export class AppRoot extends LitElement {
           </md-icon-button>
         </div>
         <md-list>
-          <md-list-item @click=${() => this.navigate('/')}>Lista</md-list-item>
-          <md-list-item @click=${() => this.navigate('/config')}>Configuración</md-list-item>
+          <md-list-item @click=${() => this.navigate('/')}
+            >${t('list')}</md-list-item>
+          <md-list-item @click=${() => this.navigate('/config')}
+            >${t('config')}</md-list-item>
         </md-list>
       </md-navigation-drawer>
 

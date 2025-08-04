@@ -1,6 +1,7 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { fixture, html } from '@open-wc/testing';
 import { vi } from 'vitest';
+import { setLang } from './i18n.js';
 
 vi.mock('@material/web/textfield/outlined-text-field.js', () => ({}));
 
@@ -11,6 +12,8 @@ if (!customElements.get('md-outlined-text-field')) {
 }
 
 describe('shopping-list component', () => {
+  beforeEach(() => setLang('es'));
+
   it('renders items', async () => {
     localStorage.clear();
     window.fetch = vi.fn().mockResolvedValue(

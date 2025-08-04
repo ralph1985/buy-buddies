@@ -4,6 +4,7 @@ import '@material/web/textfield/outlined-text-field.js';
 import { repeat } from 'lit/directives/repeat.js';
 import './shopping-item.js';
 import type { ShoppingItem } from '../../core/shopping/models/shopping-item.js';
+import { t, LangController } from './i18n.js';
 
 @customElement('shopping-list')
 export class ShoppingList extends LitElement {
@@ -20,6 +21,8 @@ export class ShoppingList extends LitElement {
 
   @state()
   private filter = '';
+
+  private lang = new LangController(this);
 
   connectedCallback() {
     super.connectedCallback();
@@ -45,11 +48,11 @@ export class ShoppingList extends LitElement {
     );
     return html`
       <md-outlined-text-field
-        label="Search"
+        .label=${t('search')}
         @input=${this.onSearch}
       ></md-outlined-text-field>
       <div class="total">
-        Total de productos: ${filtered.length} de ${this.items.length}
+        ${t('total', filtered.length, this.items.length)}
       </div>
       <div>
         ${repeat(
