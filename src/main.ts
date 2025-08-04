@@ -1,8 +1,5 @@
-import Bugsnag from '@bugsnag/js';
+import { initializeBugsnag } from './bugsnag';
 
-const bugsnagKey = import.meta.env.VITE_BUGSNAG_KEY as string | undefined;
-if (bugsnagKey) {
-  Bugsnag.start({ apiKey: bugsnagKey });
-}
+initializeBugsnag(import.meta.env.VITE_BUGSNAG_KEY as string | undefined);
 
 import './ui/app-root.js';
