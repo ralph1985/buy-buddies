@@ -41,6 +41,7 @@ declare global {
 describe('app-root component', () => {
   beforeEach(() => {
     import.meta.env.VITE_ENV = 'test';
+    import.meta.env.VITE_BUGSNAG_KEY = 'test-key';
     window.fetch = async () => new Response('[]', { status: 200 }) as any;
     localStorage.clear();
     setLang('es');
@@ -78,6 +79,7 @@ describe('app-root component', () => {
     expect(window.location.pathname).toBe('/config');
     expect(el.shadowRoot?.textContent).toContain('Configuración');
     expect(el.shadowRoot?.textContent).toContain('Env: test');
+    expect(el.shadowRoot?.textContent).toContain('Bugsnag: test-key');
   });
 
   it('renders english texts when language is set', async () => {

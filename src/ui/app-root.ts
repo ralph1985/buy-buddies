@@ -72,6 +72,10 @@ export class AppRoot extends LitElement {
     return import.meta.env.VITE_ENV ?? '';
   }
 
+  private get bugsnagKey(): string {
+    return import.meta.env.VITE_BUGSNAG_KEY ?? '';
+  }
+
   firstUpdated() {
     this.router = new Router(
       this.shadowRoot!.getElementById('outlet') as HTMLElement,
@@ -115,9 +119,17 @@ export class AppRoot extends LitElement {
         </div>
         <md-list>
           <md-list-item @click=${() => this.navigate('/')}
-            >${t('list')}</md-list-item>
+            >${t('list')}</md-list-item
+          >
           <md-list-item @click=${() => this.navigate('/config')}
-            >${t('config')}</md-list-item>
+            >${t('config')}</md-list-item
+          >
+          <md-list-item @click=${() => this.navigate('/')}
+            >${t('list')}</md-list-item
+          >
+          <md-list-item @click=${() => this.navigate('/config')}
+            >${t('config')}</md-list-item
+          >
         </md-list>
       </md-navigation-drawer>
 
@@ -125,7 +137,7 @@ export class AppRoot extends LitElement {
         <div id="outlet"></div>
       </main>
 
-      <footer>Env: ${this.viteEnv}</footer>
+      <footer>Env: ${this.viteEnv} | Bugsnag: ${this.bugsnagKey}</footer>
     `;
   }
 }
