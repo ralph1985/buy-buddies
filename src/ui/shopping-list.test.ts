@@ -13,9 +13,11 @@ if (!customElements.get('md-outlined-text-field')) {
 describe('shopping-list component', () => {
   it('renders items', async () => {
     localStorage.clear();
-    window.fetch = vi.fn().mockResolvedValue(
-      new Response(JSON.stringify([]), { status: 200 }),
-    ) as any;
+    window.fetch = vi
+      .fn()
+      .mockResolvedValue(
+        new Response(JSON.stringify([]), { status: 200 }),
+      ) as any;
     const el = await fixture<any>(html`<shopping-list></shopping-list>`);
     await el.updateComplete;
     el.items = [
