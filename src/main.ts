@@ -1,4 +1,4 @@
-import { initializeBugsnag } from './bugsnag';
+import { initializeBugsnag } from './bugsnag.js';
 
 initializeBugsnag(import.meta.env.VITE_BUGSNAG_KEY as string | undefined);
 

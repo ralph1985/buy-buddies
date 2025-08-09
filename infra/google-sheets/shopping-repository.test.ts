@@ -31,10 +31,12 @@ describe('GoogleSheetsShoppingRepository', () => {
     getRows.mockReset();
     addRow.mockReset();
     MockedGoogleSpreadsheet.mockReset();
-    MockedGoogleSpreadsheet.mockImplementation(() => ({
-      loadInfo,
-      sheetsByIndex: [{ getRows, addRow }],
-    }));
+    MockedGoogleSpreadsheet.mockImplementation(
+      () => ({
+        loadInfo,
+        sheetsByIndex: [{ getRows, addRow } as any],
+      }) as any,
+    );
     process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL = 'test@example.com';
     process.env.GOOGLE_PRIVATE_KEY = 'key';
     consoleError.mockClear();
@@ -112,10 +114,9 @@ describe('GoogleSheetsShoppingRepository', () => {
   });
 
   it('throws when worksheet index 0 is missing', async () => {
-    MockedGoogleSpreadsheet.mockImplementationOnce(() => ({
-      loadInfo,
-      sheetsByIndex: [],
-    }));
+    MockedGoogleSpreadsheet.mockImplementationOnce(
+      () => ({ loadInfo, sheetsByIndex: [] } as any),
+    );
     const repo = new GoogleSheetsShoppingRepository('sheetId');
     await expect(repo.getItems()).rejects.toThrow('Hoja no encontrada');
   });
