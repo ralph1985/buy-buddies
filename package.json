@@ -5,8 +5,9 @@
   "scripts": {
     "test": "vitest",
     "dev": "vite",
-    "prebuild": "npm test",
-    "build": "vite build"
+    "prebuild": "npm run typecheck && npm test",
+    "build": "vite build",
+    "typecheck": "tsc --noEmit"
   },
   "keywords": [],
   "author": "",

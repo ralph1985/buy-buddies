@@ -1,19 +1,21 @@
 import Bugsnag from '@bugsnag/js';
 
+const bugsnag = Bugsnag as any;
+
 export function initializeBugsnag(apiKey?: string) {
   if (!apiKey) {
     return;
   }
 
-  Bugsnag.start({ apiKey });
+  bugsnag.start({ apiKey });
 
   const onError = (event: ErrorEvent) => {
-    Bugsnag.notify(event.error ?? new Error(event.message));
+    bugsnag.notify(event.error ?? new Error(event.message));
   };
 
   const onUnhandledRejection = (event: PromiseRejectionEvent) => {
     const reason = event.reason;
-    Bugsnag.notify(reason instanceof Error ? reason : new Error(String(reason)));
+    bugsnag.notify(reason instanceof Error ? reason : new Error(String(reason)));
   };
 
   window.addEventListener('error', onError);
