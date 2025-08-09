@@ -21,6 +21,8 @@ vi.mock('google-auth-library', () => ({
 import { GoogleSpreadsheet } from 'google-spreadsheet';
 import { GoogleSheetsShoppingRepository } from './shopping-repository.js';
 
+const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {});
+
 const MockedGoogleSpreadsheet = vi.mocked(GoogleSpreadsheet);
 
 describe('GoogleSheetsShoppingRepository', () => {
@@ -35,6 +37,7 @@ describe('GoogleSheetsShoppingRepository', () => {
     }));
     process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL = 'test@example.com';
     process.env.GOOGLE_PRIVATE_KEY = 'key';
+    consoleError.mockClear();
   });
 
   it('loads sheet info and normalizes bought values', async () => {
@@ -114,7 +117,31 @@ describe('GoogleSheetsShoppingRepository', () => {
       sheetsByIndex: [],
     }));
     const repo = new GoogleSheetsShoppingRepository('sheetId');
-    await expect(repo.getItems()).rejects.toThrow('No worksheet found at index 0');
+    await expect(repo.getItems()).rejects.toThrow('Hoja no encontrada');
+  });
+
+  it('maps auth errors to user friendly messages', async () => {
+    loadInfo.mockRejectedValueOnce({ code: 401 });
+    const repo = new GoogleSheetsShoppingRepository('sheetId');
+    await expect(repo.getItems()).rejects.toThrow(
+      'No autorizado: revisa las credenciales',
+    );
+  });
+
+  it('maps network errors to user friendly messages', async () => {
+    loadInfo.mockRejectedValueOnce({ code: 'ENOTFOUND' });
+    const repo = new GoogleSheetsShoppingRepository('sheetId');
+    await expect(repo.getItems()).rejects.toThrow(
+      'Error de red al conectar con Google Sheets',
+    );
+  });
+
+  it('throws format error when rows are not an array', async () => {
+    getRows.mockResolvedValueOnce(null as any);
+    const repo = new GoogleSheetsShoppingRepository('sheetId');
+    await expect(repo.getItems()).rejects.toThrow(
+      'Error en el formato de los datos de la hoja de cálculo',
+    );
   });
 
   it('writes bought as TRUE or FALSE when adding items', async () => {
