@@ -1,9 +1,13 @@
 import { LitElement, html, css } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
-import '@material/web/textfield/outlined-text-field.js';
 import { repeat } from 'lit/directives/repeat.js';
 import './shopping-item.js';
+import './shopping-filters.js';
 import type { ShoppingItem } from '../../core/shopping/models/shopping-item.js';
+import {
+  filterShoppingItems,
+  type ShoppingFilters,
+} from '../../core/shopping/use-cases/filter-shopping-items.js';
 
 @customElement('shopping-list')
 export class ShoppingList extends LitElement {
@@ -19,7 +23,12 @@ export class ShoppingList extends LitElement {
   private items: ShoppingItem[] = [];
 
   @state()
-  private filter = '';
+  private filters: ShoppingFilters = {
+    text: '',
+    group: '',
+    category: '',
+    status: 'todos',
+  };
 
   connectedCallback() {
     super.connectedCallback();
@@ -35,19 +44,18 @@ export class ShoppingList extends LitElement {
     this.items = await res.json();
   }
 
-  private onSearch(e: Event) {
-    this.filter = (e.target as HTMLInputElement).value.toLowerCase();
-  }
-
   render() {
-    const filtered = this.items.filter((i) =>
-      i.name.toLowerCase().includes(this.filter),
-    );
+    const filtered = filterShoppingItems(this.items, this.filters);
+    const groups = [...new Set(this.items.map((i) => i.group))];
+    const categories = [...new Set(this.items.map((i) => i.category))];
     return html`
-      <md-outlined-text-field
-        label="Search"
-        @input=${this.onSearch}
-      ></md-outlined-text-field>
+      <shopping-filters
+        .groups=${groups}
+        .categories=${categories}
+        .filters=${this.filters}
+        @filters-changed=${(e: CustomEvent<ShoppingFilters>) =>
+          (this.filters = e.detail)}
+      ></shopping-filters>
       <div class="total">
         Total de productos: ${filtered.length} de ${this.items.length}
       </div>
