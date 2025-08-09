@@ -4,6 +4,7 @@ import type { ShoppingRepository } from '../../core/shopping/ports/shopping-repo
 import type { ShoppingItem } from '../../core/shopping/models/shopping-item.js';
 
 const toSheetBool = (val: boolean | undefined) => (val ? 'TRUE' : 'FALSE');
+const toSheetString = (val: string | undefined) => val ?? '';
 
 export class GoogleSheetsShoppingRepository implements ShoppingRepository {
   constructor(private sheetId: string) {}
@@ -64,7 +65,7 @@ export class GoogleSheetsShoppingRepository implements ShoppingRepository {
       unit: item.unit,
       group: item.group,
       category: item.category,
-      notes: item.notes,
+      notes: toSheetString(item.notes),
       bought: toSheetBool(item.bought),
     });
   }
@@ -83,7 +84,7 @@ export class GoogleSheetsShoppingRepository implements ShoppingRepository {
     row.set('unit', item.unit);
     row.set('group', item.group);
     row.set('category', item.category);
-    row.set('notes', item.notes);
+    row.set('notes', toSheetString(item.notes));
     row.set('bought', toSheetBool(item.bought));
     await row.save();
   }
