@@ -47,9 +47,9 @@ export class ShoppingList extends LitElement {
   }
 
   render() {
-    const filtered = filterShoppingItems(this.items, this.filters);
-    const groups = [...new Set(this.items.map((i) => i.group))];
-    const categories = [...new Set(this.items.map((i) => i.category))];
+    const filtered = filterShoppingItems(this.items || [], this.filters);
+    const groups = [...new Set((this.items || []).map((i) => i.group))];
+    const categories = [...new Set((this.items || []).map((i) => i.category))];
     return html`
       <shopping-filters
         .groups=${groups}
@@ -59,7 +59,7 @@ export class ShoppingList extends LitElement {
           (this.filters = e.detail)}
       ></shopping-filters>
       <div class="total">
-        Total de productos: ${filtered.length} de ${this.items.length}
+        Total de productos: ${filtered.length} de ${(this.items || []).length}
       </div>
       <div>
         ${repeat(
