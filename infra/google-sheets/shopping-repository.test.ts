@@ -9,6 +9,7 @@ class FakeRow {
 
 const loadInfo = vi.fn();
 const getRows = vi.fn();
+const addRow = vi.fn();
 
 vi.mock('google-spreadsheet', () => ({
   GoogleSpreadsheet: vi.fn(),
@@ -26,10 +27,11 @@ describe('GoogleSheetsShoppingRepository', () => {
   beforeEach(() => {
     loadInfo.mockClear();
     getRows.mockReset();
+    addRow.mockReset();
     MockedGoogleSpreadsheet.mockReset();
     MockedGoogleSpreadsheet.mockImplementation(() => ({
       loadInfo,
-      sheetsByIndex: [{ getRows }],
+      sheetsByIndex: [{ getRows, addRow }],
     }));
     process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL = 'test@example.com';
     process.env.GOOGLE_PRIVATE_KEY = 'key';
@@ -113,5 +115,78 @@ describe('GoogleSheetsShoppingRepository', () => {
     }));
     const repo = new GoogleSheetsShoppingRepository('sheetId');
     await expect(repo.getItems()).rejects.toThrow('No worksheet found at index 0');
+  });
+
+  it('writes bought as TRUE or FALSE when adding items', async () => {
+    const repo = new GoogleSheetsShoppingRepository('sheetId');
+
+    await repo.addItem({
+      id: '1',
+      name: 'A',
+      quantity: '',
+      unit: '',
+      group: '',
+      category: '',
+      notes: '',
+      bought: true,
+    });
+
+    expect(addRow).toHaveBeenCalledWith(
+      expect.objectContaining({ bought: 'TRUE' }),
+    );
+
+    await repo.addItem({
+      id: '2',
+      name: 'B',
+      quantity: '',
+      unit: '',
+      group: '',
+      category: '',
+      notes: '',
+      bought: false,
+    });
+
+    expect(addRow).toHaveBeenCalledWith(
+      expect.objectContaining({ bought: 'FALSE' }),
+    );
+  });
+
+  it('writes bought as TRUE or FALSE when updating items', async () => {
+    const rowSet = vi.fn();
+    const rowSave = vi.fn();
+    const row = {
+      get: (key: string) => (key === 'id' ? '1' : undefined),
+      set: rowSet,
+      save: rowSave,
+    };
+    getRows.mockResolvedValue([row]);
+
+    const repo = new GoogleSheetsShoppingRepository('sheetId');
+
+    await repo.updateItem({
+      id: '1',
+      name: 'A',
+      quantity: '',
+      unit: '',
+      group: '',
+      category: '',
+      notes: '',
+      bought: true,
+    });
+    expect(rowSet).toHaveBeenCalledWith('bought', 'TRUE');
+
+    rowSet.mockClear();
+
+    await repo.updateItem({
+      id: '1',
+      name: 'A',
+      quantity: '',
+      unit: '',
+      group: '',
+      category: '',
+      notes: '',
+      bought: undefined,
+    });
+    expect(rowSet).toHaveBeenCalledWith('bought', 'FALSE');
   });
 });
