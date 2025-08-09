@@ -41,7 +41,9 @@ export class ShoppingList extends LitElement {
       ? `/api/shopping/get?googleSheetId=${encodeURIComponent(sheetId)}`
       : '/api/shopping/get';
     const res = await fetch(url);
-    this.items = await res.json();
+    const jsonData = await res.json();
+
+    this.items = jsonData.data;
   }
 
   render() {
