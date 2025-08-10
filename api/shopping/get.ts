@@ -12,9 +12,7 @@ interface Response {
 
 export default async function handler(req: Request, res: Response) {
   const googleSheetId = req.query?.googleSheetId;
-  const repo = googleSheetId
-    ? new GoogleSheetsShoppingRepository(googleSheetId)
-    : new MockShoppingRepository();
+  const repo = googleSheetId ? new GoogleSheetsShoppingRepository(googleSheetId) : new MockShoppingRepository();
   try {
     const items = await getShoppingList(repo);
     res.status(200).json({ success: true, data: items });
@@ -23,10 +21,8 @@ export default async function handler(req: Request, res: Response) {
     let message = 'Error al obtener la lista de compras';
     if (error?.code === 401) message = 'No autorizado: revisa las credenciales';
     else if (error?.code === 404) message = 'Hoja no encontrada';
-    else if (error?.code === 'NETWORK')
-      message = 'Error de red al conectar con Google Sheets';
-    else if (error?.code === 'FORMAT')
-      message = 'Error en el formato de los datos de la hoja de cálculo';
+    else if (error?.code === 'NETWORK') message = 'Error de red al conectar con Google Sheets';
+    else if (error?.code === 'FORMAT') message = 'Error en el formato de los datos de la hoja de cálculo';
     res.status(500).json({ success: false, error: message });
   }
 }

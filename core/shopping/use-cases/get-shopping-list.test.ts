@@ -1,4 +1,4 @@
-import { describe, expect,it } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
 import { MockShoppingRepository } from '../../../infra/mock/shopping-repository.js';
 import { getShoppingList } from './get-shopping-list.js';

@@ -1,7 +1,7 @@
 import './shopping-item.js';
 
 import { fixture, html } from '@open-wc/testing';
-import { describe, expect,it } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
 import type { ShoppingItem } from '../../core/shopping/models/shopping-item.js';
 

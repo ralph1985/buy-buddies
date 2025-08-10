@@ -1,15 +1,12 @@
 import './shopping-item.js';
 import './shopping-filters.js';
 
-import { css,html, LitElement } from 'lit';
+import { css, html, LitElement } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import { repeat } from 'lit/directives/repeat.js';
 
 import type { ShoppingItem } from '../../core/shopping/models/shopping-item.js';
-import {
-  filterShoppingItems,
-  type ShoppingFilters,
-} from '../../core/shopping/use-cases/filter-shopping-items.js';
+import { filterShoppingItems, type ShoppingFilters } from '../../core/shopping/use-cases/filter-shopping-items.js';
 
 @customElement('shopping-list')
 export class ShoppingList extends LitElement {
@@ -39,9 +36,7 @@ export class ShoppingList extends LitElement {
 
   async load() {
     const sheetId = localStorage.getItem('googleSheetId');
-    const url = sheetId
-      ? `/api/shopping/get?googleSheetId=${encodeURIComponent(sheetId)}`
-      : '/api/shopping/get';
+    const url = sheetId ? `/api/shopping/get?googleSheetId=${encodeURIComponent(sheetId)}` : '/api/shopping/get';
     const res = await fetch(url);
     const jsonData = await res.json();
 
@@ -57,12 +52,9 @@ export class ShoppingList extends LitElement {
         .groups=${groups}
         .categories=${categories}
         .filters=${this.filters}
-        @filters-changed=${(e: CustomEvent<ShoppingFilters>) =>
-          (this.filters = e.detail)}
+        @filters-changed=${(e: CustomEvent<ShoppingFilters>) => (this.filters = e.detail)}
       ></shopping-filters>
-      <div class="total">
-        Total de productos: ${filtered.length} de ${(this.items || []).length}
-      </div>
+      <div class="total">Total de productos: ${filtered.length} de ${(this.items || []).length}</div>
       <div>
         ${repeat(
           filtered,

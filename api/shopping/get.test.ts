@@ -1,4 +1,4 @@
-import { beforeEach,describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 vi.mock('../../infra/google-sheets/shopping-repository.js', () => ({
   GoogleSheetsShoppingRepository: vi.fn(),
@@ -39,9 +39,10 @@ describe('api/shopping/get', () => {
 
   it('returns an error object on failure', async () => {
     vi.mocked(GoogleSheetsShoppingRepository).mockImplementation(
-      () => ({
-        getItems: vi.fn().mockRejectedValue({ code: 401 }),
-      } as any),
+      () =>
+        ({
+          getItems: vi.fn().mockRejectedValue({ code: 401 }),
+        }) as any,
     );
     const res = createRes();
     await handler({ query: { googleSheetId: 'id' } }, res);

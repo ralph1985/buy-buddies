@@ -7,10 +7,7 @@ export interface ShoppingFilters {
   status?: 'todos' | 'comprado' | 'no-comprado';
 }
 
-export function filterShoppingItems(
-  items: ShoppingItem[],
-  filters: ShoppingFilters,
-): ShoppingItem[] {
+export function filterShoppingItems(items: ShoppingItem[], filters: ShoppingFilters): ShoppingItem[] {
   const text = filters.text?.toLowerCase().trim() ?? '';
   return items.filter((item) => {
     if (filters.group && item.group !== filters.group) {
@@ -25,10 +22,7 @@ export function filterShoppingItems(
     if (filters.status === 'no-comprado' && item.bought) {
       return false;
     }
-    if (
-      text &&
-      !(`${item.name} ${item.notes ?? ''}`.toLowerCase().includes(text))
-    ) {
+    if (text && !`${item.name} ${item.notes ?? ''}`.toLowerCase().includes(text)) {
       return false;
     }
     return true;

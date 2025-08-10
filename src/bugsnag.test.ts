@@ -1,5 +1,5 @@
 import Bugsnag from '@bugsnag/js';
-import { beforeEach,describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { initializeBugsnag } from './bugsnag.js';
 

@@ -1,4 +1,4 @@
-import { describe, expect,it } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
 import type { ShoppingItem } from '../models/shopping-item.js';
 import { filterShoppingItems, type ShoppingFilters } from './filter-shopping-items.js';

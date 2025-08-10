@@ -1,5 +1,5 @@
 import { fixture, html } from '@open-wc/testing';
-import { describe, expect,it } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { vi } from 'vitest';
 
 vi.mock('@material/web/textfield/outlined-text-field.js', () => ({}));
