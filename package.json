@@ -18,7 +18,9 @@
     "format:check": "prettier . --check",
     "print:node": "node -v",
     "preinstall": "node scripts/check-node-version.js",
-    "clean": "rm -rf node_modules dist .vite coverage && npm install"
+    "clean": "rm -rf node_modules dist .vite coverage && npm install",
+    "e2e": "playwright test",
+    "e2e:smoke": "playwright test tests/e2e/smoke.spec.ts"
   },
   "keywords": [],
   "author": "",
@@ -34,6 +36,7 @@
   },
   "devDependencies": {
     "@open-wc/testing": "4.0.0",
+    "@playwright/test": "1.54.2",
     "@testing-library/dom": "10.4.1",
     "@types/node": "24.1.0",
     "@typescript-eslint/eslint-plugin": "8.39.0",
