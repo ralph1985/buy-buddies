@@ -1,6 +1,8 @@
-import { LitElement, html, css } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
 import '@material/web/textfield/outlined-text-field.js';
+
+import { css, html, LitElement } from 'lit';
+import { customElement, property, state } from 'lit/decorators.js';
+
 import type { ShoppingFilters } from '../../core/shopping/use-cases/filter-shopping-items.js';
 
 @customElement('shopping-filters')
@@ -67,9 +69,7 @@ export class ShoppingFiltersElement extends LitElement {
   };
 
   private onStatus = (e: Event) => {
-    const maybeStatus = (e.target as HTMLSelectElement).value as
-      | ShoppingFilters['status']
-      | undefined;
+    const maybeStatus = (e.target as HTMLSelectElement).value as ShoppingFilters['status'] | undefined;
     const next: Partial<ShoppingFilters> = {};
     if (maybeStatus !== undefined) next.status = maybeStatus;
     this.updateFilters(next);
@@ -81,20 +81,14 @@ export class ShoppingFiltersElement extends LitElement {
     if (this.filters.group) parts.push(`Grupo: ${this.filters.group}`);
     if (this.filters.category) parts.push(`Categoría: ${this.filters.category}`);
     if (this.filters.status && this.filters.status !== 'todos') {
-      parts.push(
-        `Estado: ${this.filters.status === 'comprado' ? 'Comprado' : 'No comprado'}`,
-      );
+      parts.push(`Estado: ${this.filters.status === 'comprado' ? 'Comprado' : 'No comprado'}`);
     }
-    return parts.length
-      ? html`<div class="summary">Filtros: ${parts.join(', ')}</div>`
-      : html``;
+    return parts.length ? html`<div class="summary">Filtros: ${parts.join(', ')}</div>` : html``;
   }
 
   override render() {
     return html`
-      <button @click=${this.toggle}>
-        ${this.open ? 'Ocultar filtros' : 'Mostrar filtros'}
-      </button>
+      <button @click=${this.toggle}>${this.open ? 'Ocultar filtros' : 'Mostrar filtros'}</button>
       ${this.open
         ? html`<div class="box">
             <md-outlined-text-field
@@ -104,24 +98,18 @@ export class ShoppingFiltersElement extends LitElement {
             ></md-outlined-text-field>
             <select @change=${this.onGroup}>
               <option value="">Todos los grupos</option>
-              ${this.groups.map(
-                (g) =>
-                  html`<option value="${g}" ?selected=${this.filters.group === g}>${g}</option>`,
-              )}
+              ${this.groups.map((g) => html`<option value="${g}" ?selected=${this.filters.group === g}>${g}</option>`)}
             </select>
             <select @change=${this.onCategory}>
               <option value="">Todas las categorías</option>
               ${this.categories.map(
-                (c) =>
-                  html`<option value="${c}" ?selected=${this.filters.category === c}>${c}</option>`,
+                (c) => html`<option value="${c}" ?selected=${this.filters.category === c}>${c}</option>`,
               )}
             </select>
             <select @change=${this.onStatus}>
               <option value="todos" ?selected=${this.filters.status === 'todos'}>Todos</option>
               <option value="comprado" ?selected=${this.filters.status === 'comprado'}>Comprado</option>
-              <option value="no-comprado" ?selected=${
-                this.filters.status === 'no-comprado'
-              }>No comprado</option>
+              <option value="no-comprado" ?selected=${this.filters.status === 'no-comprado'}>No comprado</option>
             </select>
           </div>`
         : this.renderSummary()}

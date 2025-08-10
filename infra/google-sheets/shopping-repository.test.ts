@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 class FakeRow {
   constructor(private data: Record<string, unknown>) {}
@@ -19,6 +19,7 @@ vi.mock('google-auth-library', () => ({
 }));
 
 import { GoogleSpreadsheet } from 'google-spreadsheet';
+
 import { GoogleSheetsShoppingRepository } from './shopping-repository.js';
 
 const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {});
@@ -32,10 +33,11 @@ describe('GoogleSheetsShoppingRepository', () => {
     addRow.mockReset();
     MockedGoogleSpreadsheet.mockReset();
     MockedGoogleSpreadsheet.mockImplementation(
-      () => ({
-        loadInfo,
-        sheetsByIndex: [{ getRows, addRow } as any],
-      }) as any,
+      () =>
+        ({
+          loadInfo,
+          sheetsByIndex: [{ getRows, addRow } as any],
+        }) as any,
     );
     process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL = 'test@example.com';
     process.env.GOOGLE_PRIVATE_KEY = 'key';
@@ -114,9 +116,7 @@ describe('GoogleSheetsShoppingRepository', () => {
   });
 
   it('throws when worksheet index 0 is missing', async () => {
-    MockedGoogleSpreadsheet.mockImplementationOnce(
-      () => ({ loadInfo, sheetsByIndex: [] } as any),
-    );
+    MockedGoogleSpreadsheet.mockImplementationOnce(() => ({ loadInfo, sheetsByIndex: [] }) as any);
     const repo = new GoogleSheetsShoppingRepository('sheetId');
     await expect(repo.getItems()).rejects.toThrow('Hoja no encontrada');
   });
@@ -124,25 +124,19 @@ describe('GoogleSheetsShoppingRepository', () => {
   it('maps auth errors to user friendly messages', async () => {
     loadInfo.mockRejectedValueOnce({ code: 401 });
     const repo = new GoogleSheetsShoppingRepository('sheetId');
-    await expect(repo.getItems()).rejects.toThrow(
-      'No autorizado: revisa las credenciales',
-    );
+    await expect(repo.getItems()).rejects.toThrow('No autorizado: revisa las credenciales');
   });
 
   it('maps network errors to user friendly messages', async () => {
     loadInfo.mockRejectedValueOnce({ code: 'ENOTFOUND' });
     const repo = new GoogleSheetsShoppingRepository('sheetId');
-    await expect(repo.getItems()).rejects.toThrow(
-      'Error de red al conectar con Google Sheets',
-    );
+    await expect(repo.getItems()).rejects.toThrow('Error de red al conectar con Google Sheets');
   });
 
   it('throws format error when rows are not an array', async () => {
     getRows.mockResolvedValueOnce(null as any);
     const repo = new GoogleSheetsShoppingRepository('sheetId');
-    await expect(repo.getItems()).rejects.toThrow(
-      'Error en el formato de los datos de la hoja de cálculo',
-    );
+    await expect(repo.getItems()).rejects.toThrow('Error en el formato de los datos de la hoja de cálculo');
   });
 
   it('writes bought as TRUE or FALSE when adding items', async () => {
@@ -159,9 +153,7 @@ describe('GoogleSheetsShoppingRepository', () => {
       bought: true,
     });
 
-    expect(addRow).toHaveBeenCalledWith(
-      expect.objectContaining({ bought: 'TRUE' }),
-    );
+    expect(addRow).toHaveBeenCalledWith(expect.objectContaining({ bought: 'TRUE' }));
 
     await repo.addItem({
       id: '2',
@@ -174,9 +166,7 @@ describe('GoogleSheetsShoppingRepository', () => {
       bought: false,
     });
 
-    expect(addRow).toHaveBeenCalledWith(
-      expect.objectContaining({ bought: 'FALSE' }),
-    );
+    expect(addRow).toHaveBeenCalledWith(expect.objectContaining({ bought: 'FALSE' }));
   });
 
   it('writes bought as TRUE or FALSE when updating items', async () => {

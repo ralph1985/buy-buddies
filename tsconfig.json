@@ -23,13 +23,6 @@
     "useDefineForClassFields": false,
     "types": ["vite/client", "node"]
   },
-  "include": [
-    "api/**/*.ts",
-    "core/**/*.ts",
-    "infra/**/*.ts",
-    "src/**/*.ts",
-    "vite.config.ts",
-    "vitest.config.ts"
-  ],
+  "include": ["api/**/*.ts", "core/**/*.ts", "infra/**/*.ts", "src/**/*.ts", "vite.config.ts", "vitest.config.ts"],
   "exclude": ["dist", "node_modules"]
 }

@@ -1,5 +1,6 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
 import Bugsnag from '@bugsnag/js';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+
 import { initializeBugsnag } from './bugsnag.js';
 
 vi.mock('@bugsnag/js', () => {

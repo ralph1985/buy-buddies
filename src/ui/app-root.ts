@@ -1,12 +1,13 @@
-import { LitElement, html, css } from 'lit';
-import { customElement, query } from 'lit/decorators.js';
-import { Router } from '@vaadin/router';
 import '@material/web/iconbutton/icon-button.js';
 import '@material/web/labs/navigationdrawer/navigation-drawer.js';
 import '@material/web/list/list.js';
 import '@material/web/list/list-item.js';
 import './shopping-list.js';
 import './config-page.js';
+
+import { Router } from '@vaadin/router';
+import { css, html, LitElement } from 'lit';
+import { customElement, query } from 'lit/decorators.js';
 
 @customElement('app-root')
 export class AppRoot extends LitElement {
@@ -75,9 +76,7 @@ export class AppRoot extends LitElement {
   }
 
   override firstUpdated() {
-    this.router = new Router(
-      this.shadowRoot!.getElementById('outlet') as HTMLElement,
-    );
+    this.router = new Router(this.shadowRoot!.getElementById('outlet') as HTMLElement);
     this.router.setRoutes([
       { path: '/', component: 'shopping-list' },
       { path: '/config', component: 'config-page' },
@@ -117,9 +116,7 @@ export class AppRoot extends LitElement {
         </div>
         <md-list>
           <md-list-item @click=${() => this.navigate('/')}>Lista</md-list-item>
-          <md-list-item @click=${() => this.navigate('/config')}
-            >Configuración</md-list-item
-          >
+          <md-list-item @click=${() => this.navigate('/config')}>Configuración</md-list-item>
         </md-list>
       </md-navigation-drawer>
 

@@ -1,7 +1,8 @@
-import { GoogleSpreadsheet, GoogleSpreadsheetWorksheet } from 'google-spreadsheet';
 import { GoogleAuth } from 'google-auth-library';
-import type { ShoppingRepository } from '../../core/shopping/ports/shopping-repository.js';
+import { GoogleSpreadsheet, GoogleSpreadsheetWorksheet } from 'google-spreadsheet';
+
 import type { ShoppingItem } from '../../core/shopping/models/shopping-item.js';
+import type { ShoppingRepository } from '../../core/shopping/ports/shopping-repository.js';
 
 const toSheetBool = (val: boolean | undefined) => (val ? 'TRUE' : 'FALSE');
 const toSheetString = (val: string | undefined) => val ?? '';
@@ -78,7 +79,9 @@ export class GoogleSheetsShoppingRepository implements ShoppingRepository {
 
       const toBool = (v: unknown): boolean => {
         if (typeof v === 'boolean') return v;
-        const s = String(v ?? '').trim().toLowerCase();
+        const s = String(v ?? '')
+          .trim()
+          .toLowerCase();
         if (!s) return false; // por defecto false
         return s === 'true' || s === '1' || s === 'yes' || s === 'y' || s === 'x';
       };
@@ -120,9 +123,7 @@ export class GoogleSheetsShoppingRepository implements ShoppingRepository {
     try {
       const sheet = await this.getSheet(false);
       const rows = await sheet.getRows();
-      const row = rows.find(
-        (r) => String(r.get('id') ?? '').trim() === item.id,
-      );
+      const row = rows.find((r) => String(r.get('id') ?? '').trim() === item.id);
       if (!row) {
         const err: any = new Error(`Item with id ${item.id} not found`);
         err.code = 404;

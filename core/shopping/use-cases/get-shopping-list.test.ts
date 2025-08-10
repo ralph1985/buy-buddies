@@ -1,6 +1,7 @@
-import { describe, it, expect } from 'vitest';
-import { getShoppingList } from './get-shopping-list.js';
+import { describe, expect, it } from 'vitest';
+
 import { MockShoppingRepository } from '../../../infra/mock/shopping-repository.js';
+import { getShoppingList } from './get-shopping-list.js';
 
 describe('getShoppingList', () => {
   it('returns items from repository', async () => {

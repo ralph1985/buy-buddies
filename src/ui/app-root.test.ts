@@ -1,5 +1,5 @@
-import { describe, it, expect, beforeEach } from 'vitest';
 import { fixture, html } from '@open-wc/testing';
+import { beforeEach, describe, expect, it } from 'vitest';
 import { vi } from 'vitest';
 
 vi.mock('@material/web/iconbutton/icon-button.js', () => ({}));
@@ -51,12 +51,8 @@ describe('app-root component', () => {
     const el = await fixture<AppRoot>(html`<app-root></app-root>`);
     await el.updateComplete;
 
-    const button = el.shadowRoot?.querySelector(
-      'header md-icon-button',
-    ) as HTMLElement;
-    const drawer = el.shadowRoot?.querySelector(
-      'md-navigation-drawer',
-    ) as HTMLElement & { opened: boolean };
+    const button = el.shadowRoot?.querySelector('header md-icon-button') as HTMLElement;
+    const drawer = el.shadowRoot?.querySelector('md-navigation-drawer') as HTMLElement & { opened: boolean };
 
     button.click();
     expect(drawer.opened).toBe(true);
@@ -68,9 +64,7 @@ describe('app-root component', () => {
     const el = await fixture<AppRoot>(html`<app-root></app-root>`);
     await el.updateComplete;
 
-    const drawer = el.shadowRoot?.querySelector(
-      'md-navigation-drawer',
-    ) as HTMLElement & { opened: boolean };
+    const drawer = el.shadowRoot?.querySelector('md-navigation-drawer') as HTMLElement & { opened: boolean };
     drawer.opened = true;
     const items = drawer.querySelectorAll('md-list-item');
     (items[1] as HTMLElement).click();
@@ -85,12 +79,8 @@ describe('app-root component', () => {
     const el = await fixture<AppRoot>(html`<app-root></app-root>`);
     await el.updateComplete;
 
-    const menuButton = el.shadowRoot?.querySelector(
-      'header md-icon-button',
-    ) as HTMLElement;
-    const drawer = el.shadowRoot?.querySelector(
-      'md-navigation-drawer',
-    ) as HTMLElement & { opened: boolean };
+    const menuButton = el.shadowRoot?.querySelector('header md-icon-button') as HTMLElement;
+    const drawer = el.shadowRoot?.querySelector('md-navigation-drawer') as HTMLElement & { opened: boolean };
 
     menuButton.click();
     expect(drawer.opened).toBe(true);

@@ -1,5 +1,5 @@
-import { describe, it, expect, beforeEach } from 'vitest';
 import { fixture, html } from '@open-wc/testing';
+import { beforeEach, describe, expect, it } from 'vitest';
 import { vi } from 'vitest';
 
 vi.mock('@material/web/textfield/outlined-text-field.js', () => ({}));
@@ -13,9 +13,7 @@ if (!customElements.get('md-outlined-text-field')) {
 describe('shopping-list component', () => {
   beforeEach(() => {
     localStorage.clear();
-    window.fetch = vi
-      .fn()
-      .mockResolvedValue(new Response(JSON.stringify([]), { status: 200 })) as any;
+    window.fetch = vi.fn().mockResolvedValue(new Response(JSON.stringify([]), { status: 200 })) as any;
   });
 
   it('filters by text including notes', async () => {
