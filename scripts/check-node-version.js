@@ -1,5 +1,3 @@
-// Falla la instalación si Node es menor a 22.x, con mensaje claro.
-// No requiere dependencias externas (sin semver).
 (function enforceNodeVersion() {
   const requiredMajor = 22;
   const current = process.versions.node; // e.g., "22.4.1"
@@ -7,9 +5,9 @@
 
   if (Number.isNaN(major) || major < requiredMajor) {
     console.error(
-      `\n❌ Node ${requiredMajor}.0.0 o superior es requerido para este proyecto.\n` +
-      `   Versión detectada: ${current}\n` +
-      `   Sugerencia: usa nvm/volta y cambia con "nvm use 22" o instala Node 22.\n`
+      `\n❌ Node ${requiredMajor}.0.0 or higher is required for this project.\n` +
+        `   Detected version: ${current}\n` +
+        `   Suggestion: use nvm/volta and switch with "nvm use 22" or install Node 22.\n`,
     );
     process.exit(1);
   }
