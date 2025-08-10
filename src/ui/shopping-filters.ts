@@ -5,7 +5,7 @@ import type { ShoppingFilters } from '../../core/shopping/use-cases/filter-shopp
 
 @customElement('shopping-filters')
 export class ShoppingFiltersElement extends LitElement {
-  static styles = css`
+  static override styles = css`
     .box {
       border: 1px solid #ccc;
       padding: 8px;
@@ -47,22 +47,32 @@ export class ShoppingFiltersElement extends LitElement {
 
   private onText = (e: Event) => {
     const value = (e.target as HTMLInputElement).value;
-    this.updateFilters({ text: value });
+    const next: Partial<ShoppingFilters> = {};
+    if (value !== undefined) next.text = value;
+    this.updateFilters(next);
   };
 
   private onGroup = (e: Event) => {
     const value = (e.target as HTMLSelectElement).value;
-    this.updateFilters({ group: value });
+    const next: Partial<ShoppingFilters> = {};
+    if (value !== undefined) next.group = value;
+    this.updateFilters(next);
   };
 
   private onCategory = (e: Event) => {
     const value = (e.target as HTMLSelectElement).value;
-    this.updateFilters({ category: value });
+    const next: Partial<ShoppingFilters> = {};
+    if (value !== undefined) next.category = value;
+    this.updateFilters(next);
   };
 
   private onStatus = (e: Event) => {
-    const value = (e.target as HTMLSelectElement).value as ShoppingFilters['status'];
-    this.updateFilters({ status: value });
+    const maybeStatus = (e.target as HTMLSelectElement).value as
+      | ShoppingFilters['status']
+      | undefined;
+    const next: Partial<ShoppingFilters> = {};
+    if (maybeStatus !== undefined) next.status = maybeStatus;
+    this.updateFilters(next);
   };
 
   private renderSummary() {
@@ -80,7 +90,7 @@ export class ShoppingFiltersElement extends LitElement {
       : html``;
   }
 
-  render() {
+  override render() {
     return html`
       <button @click=${this.toggle}>
         ${this.open ? 'Ocultar filtros' : 'Mostrar filtros'}
