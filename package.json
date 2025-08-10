@@ -12,7 +12,7 @@
     "prebuild": "npm run print:node && npm run lint && npm run format:check && npm run typecheck && npm test",
     "build": "vite build",
     "typecheck": "tsc --noEmit",
-    "lint": "eslint . --ext .ts,.js",
+    "lint": "eslint . --ext .ts,.js --max-warnings=50",
     "lint:fix": "npm run lint -- --fix",
     "format": "prettier . --write",
     "format:check": "prettier . --check",
