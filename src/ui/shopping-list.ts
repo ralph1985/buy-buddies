@@ -1,8 +1,10 @@
-import { LitElement, html, css } from 'lit';
-import { customElement, state } from 'lit/decorators.js';
-import { repeat } from 'lit/directives/repeat.js';
 import './shopping-item.js';
 import './shopping-filters.js';
+
+import { css,html, LitElement } from 'lit';
+import { customElement, state } from 'lit/decorators.js';
+import { repeat } from 'lit/directives/repeat.js';
+
 import type { ShoppingItem } from '../../core/shopping/models/shopping-item.js';
 import {
   filterShoppingItems,

@@ -1,7 +1,8 @@
-import { LitElement, html, css } from 'lit';
-import { customElement, state } from 'lit/decorators.js';
-import { Router } from '@vaadin/router';
 import '@material/web/textfield/outlined-text-field.js';
+
+import { Router } from '@vaadin/router';
+import { css,html, LitElement } from 'lit';
+import { customElement, state } from 'lit/decorators.js';
 
 @customElement('config-page')
 export class ConfigPage extends LitElement {

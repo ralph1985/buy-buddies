@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { beforeEach,describe, expect, it, vi } from 'vitest';
 
 class FakeRow {
   constructor(private data: Record<string, unknown>) {}
@@ -19,6 +19,7 @@ vi.mock('google-auth-library', () => ({
 }));
 
 import { GoogleSpreadsheet } from 'google-spreadsheet';
+
 import { GoogleSheetsShoppingRepository } from './shopping-repository.js';
 
 const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {});

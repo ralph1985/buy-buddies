@@ -1,6 +1,8 @@
-import { LitElement, html, css } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
 import '@material/web/textfield/outlined-text-field.js';
+
+import { css,html, LitElement } from 'lit';
+import { customElement, property, state } from 'lit/decorators.js';
+
 import type { ShoppingFilters } from '../../core/shopping/use-cases/filter-shopping-items.js';
 
 @customElement('shopping-filters')

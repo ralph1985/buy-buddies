@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { beforeEach,describe, expect, it, vi } from 'vitest';
 
 vi.mock('../../infra/google-sheets/shopping-repository.js', () => ({
   GoogleSheetsShoppingRepository: vi.fn(),
@@ -7,9 +7,9 @@ vi.mock('../../infra/mock/shopping-repository.js', () => ({
   MockShoppingRepository: vi.fn(),
 }));
 
-import handler from './get.js';
 import { GoogleSheetsShoppingRepository } from '../../infra/google-sheets/shopping-repository.js';
 import { MockShoppingRepository } from '../../infra/mock/shopping-repository.js';
+import handler from './get.js';
 
 const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {});
 

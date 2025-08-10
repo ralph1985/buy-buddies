@@ -1,5 +1,6 @@
-import { LitElement, html, css } from 'lit';
+import { css,html, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+
 import type { ShoppingItem } from '../../core/shopping/models/shopping-item.js';
 
 @customElement('shopping-item')

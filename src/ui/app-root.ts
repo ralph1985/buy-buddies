@@ -1,12 +1,13 @@
-import { LitElement, html, css } from 'lit';
-import { customElement, query } from 'lit/decorators.js';
-import { Router } from '@vaadin/router';
 import '@material/web/iconbutton/icon-button.js';
 import '@material/web/labs/navigationdrawer/navigation-drawer.js';
 import '@material/web/list/list.js';
 import '@material/web/list/list-item.js';
 import './shopping-list.js';
 import './config-page.js';
+
+import { Router } from '@vaadin/router';
+import { css,html, LitElement } from 'lit';
+import { customElement, query } from 'lit/decorators.js';
 
 @customElement('app-root')
 export class AppRoot extends LitElement {

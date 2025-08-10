@@ -1,6 +1,7 @@
-import { describe, it, expect } from 'vitest';
-import { filterShoppingItems, type ShoppingFilters } from './filter-shopping-items.js';
+import { describe, expect,it } from 'vitest';
+
 import type { ShoppingItem } from '../models/shopping-item.js';
+import { filterShoppingItems, type ShoppingFilters } from './filter-shopping-items.js';
 
 const items: ShoppingItem[] = [
   {
