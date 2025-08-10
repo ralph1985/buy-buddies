@@ -3,7 +3,10 @@ module.exports = {
   root: true,
   env: { es2022: true, node: true, browser: true },
   parser: '@typescript-eslint/parser',
-  parserOptions: { ecmaVersion: 'latest', sourceType: 'module' },
+  parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module'
+  },
   plugins: [
     '@typescript-eslint',
     'import',
@@ -21,17 +24,26 @@ module.exports = {
     'plugin:unicorn/recommended',
     'plugin:lit/recommended',
     'plugin:lit-a11y/recommended',
-    'prettier'
+    // ¡siempre al final!
+    'eslint-config-prettier'
   ],
-  settings: { 'import/resolver': { node: { extensions: ['.ts', '.js'] } } },
+  settings: {
+    'import/resolver': { node: { extensions: ['.ts', '.js'] } }
+  },
   rules: {
-    'unicorn/prefer-module': 'off',
-    'unicorn/filename-case': 'off',
-    'import/no-unresolved': 'off',
-    'import/order': 'off',
+    // Proyecto
     'simple-import-sort/imports': 'warn',
     'simple-import-sort/exports': 'warn',
+
+    // Unicorn
+    'unicorn/prefer-module': 'off',
+    'unicorn/filename-case': 'off',
+
+    // Import
+    'import/no-unresolved': 'off',
+
+    // TS
     '@typescript-eslint/explicit-function-return-type': 'off'
   },
-  ignorePatterns: ['dist', 'node_modules']
+  ignorePatterns: ['dist', 'node_modules', 'coverage']
 };
