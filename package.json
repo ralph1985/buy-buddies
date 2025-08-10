@@ -17,7 +17,8 @@
     "format": "prettier . --write",
     "format:check": "prettier . --check",
     "print:node": "node -v",
-    "preinstall": "node scripts/check-node-version.js"
+    "preinstall": "node scripts/check-node-version.js",
+    "clean": "rm -rf node_modules dist .vite coverage && npm install"
   },
   "keywords": [],
   "author": "",
