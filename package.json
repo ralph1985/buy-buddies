@@ -9,13 +9,14 @@
   "scripts": {
     "test": "vitest",
     "dev": "vite",
-    "prebuild": "npm run lint && npm run format:check && npm run typecheck && npm test",
+    "prebuild": "npm run print:node && npm run lint && npm run format:check && npm run typecheck && npm test",
     "build": "vite build",
     "typecheck": "tsc --noEmit",
     "lint": "eslint . --ext .ts,.js",
     "lint:fix": "npm run lint -- --fix",
     "format": "prettier . --write",
     "format:check": "prettier . --check",
+    "print:node": "node -v",
     "preinstall": "node scripts/check-node-version.js"
   },
   "keywords": [],
