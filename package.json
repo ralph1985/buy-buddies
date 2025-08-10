@@ -2,6 +2,10 @@
   "name": "buy-buddies",
   "version": "1.0.0",
   "description": "",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "engineStrict": true,
   "scripts": {
     "test": "vitest",
     "dev": "vite",
@@ -11,7 +15,8 @@
     "lint": "eslint . --ext .ts,.js",
     "lint:fix": "npm run lint -- --fix",
     "format": "prettier . --write",
-    "format:check": "prettier . --check"
+    "format:check": "prettier . --check",
+    "preinstall": "node scripts/check-node-version.js"
   },
   "keywords": [],
   "author": "",
