@@ -30,27 +30,27 @@ describe('filterShoppingItems', () => {
     const filters: ShoppingFilters = { text: 'fría' };
     const res = filterShoppingItems(items, filters);
     expect(res).toHaveLength(1);
-    expect(res[0].id).toBe('1');
+    expect(res[0]!.id).toBe('1');
   });
 
   it('filters by group and category', () => {
     const filters: ShoppingFilters = { group: 'Amigos', category: 'Lácteos' };
     const res = filterShoppingItems(items, filters);
     expect(res).toHaveLength(1);
-    expect(res[0].id).toBe('2');
+    expect(res[0]!.id).toBe('2');
   });
 
   it('filters by status comprado', () => {
     const filters: ShoppingFilters = { status: 'comprado' };
     const res = filterShoppingItems(items, filters);
     expect(res).toHaveLength(1);
-    expect(res[0].id).toBe('2');
+    expect(res[0]!.id).toBe('2');
   });
 
   it('filters by status no-comprado', () => {
     const filters: ShoppingFilters = { status: 'no-comprado' };
     const res = filterShoppingItems(items, filters);
     expect(res).toHaveLength(1);
-    expect(res[0].id).toBe('1');
+    expect(res[0]!.id).toBe('1');
   });
 });

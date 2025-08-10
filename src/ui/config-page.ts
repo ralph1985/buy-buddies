@@ -5,7 +5,7 @@ import '@material/web/textfield/outlined-text-field.js';
 
 @customElement('config-page')
 export class ConfigPage extends LitElement {
-  static styles = css`
+  static override styles = css`
     :host {
       display: block;
       padding: 16px;
@@ -21,7 +21,7 @@ export class ConfigPage extends LitElement {
   @state()
   private googleSheetId = '';
 
-  connectedCallback() {
+  override connectedCallback() {
     super.connectedCallback();
     this.googleSheetId = localStorage.getItem('googleSheetId') ?? '';
   }
@@ -35,7 +35,7 @@ export class ConfigPage extends LitElement {
     Router.go('/');
   }
 
-  render() {
+  override render() {
     return html`
       <h1>Configuración</h1>
       <md-outlined-text-field

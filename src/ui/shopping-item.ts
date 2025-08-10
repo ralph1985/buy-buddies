@@ -4,7 +4,7 @@ import type { ShoppingItem } from '../../core/shopping/models/shopping-item.js';
 
 @customElement('shopping-item')
 export class ShoppingItemElement extends LitElement {
-  static styles = css`
+  static override styles = css`
     :host {
       display: block;
       border: 1px solid #ccc;
@@ -46,7 +46,7 @@ export class ShoppingItemElement extends LitElement {
   @property({ type: Object })
   item!: ShoppingItem;
 
-  render() {
+  override render() {
     if (!this.item) {
       return html``;
     }

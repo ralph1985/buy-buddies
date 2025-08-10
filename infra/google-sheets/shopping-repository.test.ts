@@ -213,7 +213,7 @@ describe('GoogleSheetsShoppingRepository', () => {
       group: '',
       category: '',
       notes: '',
-      bought: undefined,
+      bought: false,
     });
     expect(rowSet).toHaveBeenCalledWith('bought', 'FALSE');
   });

@@ -10,7 +10,7 @@ import './config-page.js';
 
 @customElement('app-root')
 export class AppRoot extends LitElement {
-  static styles = css`
+  static override styles = css`
     .top-bar {
       display: flex;
       align-items: center;
@@ -74,7 +74,7 @@ export class AppRoot extends LitElement {
     return import.meta.env.VITE_BUGSNAG_KEY ?? '';
   }
 
-  firstUpdated() {
+  override firstUpdated() {
     this.router = new Router(
       this.shadowRoot!.getElementById('outlet') as HTMLElement,
     );
@@ -93,7 +93,7 @@ export class AppRoot extends LitElement {
     this.drawer.opened = false;
   }
 
-  render() {
+  override render() {
     return html`
       <header class="top-bar">
         <md-icon-button @click=${this.toggleDrawer}>

@@ -11,7 +11,7 @@ import {
 
 @customElement('shopping-list')
 export class ShoppingList extends LitElement {
-  static styles = css`
+  static override styles = css`
     :host {
       display: block;
       padding: 16px;
@@ -30,7 +30,7 @@ export class ShoppingList extends LitElement {
     status: 'todos',
   };
 
-  connectedCallback() {
+  override connectedCallback() {
     super.connectedCallback();
     this.load();
   }
@@ -46,7 +46,7 @@ export class ShoppingList extends LitElement {
     this.items = jsonData.data;
   }
 
-  render() {
+  override render() {
     const filtered = filterShoppingItems(this.items || [], this.filters);
     const groups = [...new Set((this.items || []).map((i) => i.group))];
     const categories = [...new Set((this.items || []).map((i) => i.category))];
