@@ -118,25 +118,25 @@ describe('GoogleSheetsShoppingRepository', () => {
   it('throws when worksheet index 0 is missing', async () => {
     MockedGoogleSpreadsheet.mockImplementationOnce(() => ({ loadInfo, sheetsByIndex: [] }) as any);
     const repo = new GoogleSheetsShoppingRepository('sheetId');
-    await expect(repo.getItems()).rejects.toThrow('Hoja no encontrada');
+    await expect(repo.getItems()).rejects.toThrow('Sheet not found');
   });
 
   it('maps auth errors to user friendly messages', async () => {
     loadInfo.mockRejectedValueOnce({ code: 401 });
     const repo = new GoogleSheetsShoppingRepository('sheetId');
-    await expect(repo.getItems()).rejects.toThrow('No autorizado: revisa las credenciales');
+    await expect(repo.getItems()).rejects.toThrow('Unauthorized: check credentials');
   });
 
   it('maps network errors to user friendly messages', async () => {
     loadInfo.mockRejectedValueOnce({ code: 'ENOTFOUND' });
     const repo = new GoogleSheetsShoppingRepository('sheetId');
-    await expect(repo.getItems()).rejects.toThrow('Error de red al conectar con Google Sheets');
+    await expect(repo.getItems()).rejects.toThrow('Network error connecting to Google Sheets');
   });
 
   it('throws format error when rows are not an array', async () => {
     getRows.mockResolvedValueOnce(null as any);
     const repo = new GoogleSheetsShoppingRepository('sheetId');
-    await expect(repo.getItems()).rejects.toThrow('Error en el formato de los datos de la hoja de cálculo');
+    await expect(repo.getItems()).rejects.toThrow('Spreadsheet data format error');
   });
 
   it('writes bought as TRUE or FALSE when adding items', async () => {

@@ -12,10 +12,10 @@ const mapGoogleError = (error: any, defaultMessage: string): never => {
   let message = defaultMessage;
   let code = error?.code;
   if (error?.code === 401 || error?.code === 403) {
-    message = 'No autorizado: revisa las credenciales';
+    message = 'Unauthorized: check credentials';
     code = 401;
   } else if (error?.code === 404) {
-    message = 'Hoja no encontrada';
+    message = 'Sheet not found';
     code = 404;
   } else if (
     error?.code === 'NETWORK' ||
@@ -23,10 +23,10 @@ const mapGoogleError = (error: any, defaultMessage: string): never => {
     error?.code === 'ECONNREFUSED' ||
     error?.code === 'ECONNRESET'
   ) {
-    message = 'Error de red al conectar con Google Sheets';
+    message = 'Network error connecting to Google Sheets';
     code = 'NETWORK';
   } else if (error?.code === 'FORMAT') {
-    message = 'Error en el formato de los datos de la hoja de cálculo';
+    message = 'Spreadsheet data format error';
     code = 'FORMAT';
   }
   const err: any = new Error(message);
@@ -56,14 +56,14 @@ export class GoogleSheetsShoppingRepository implements ShoppingRepository {
 
       const sheet = doc.sheetsByIndex?.[0];
       if (!sheet) {
-        const err: any = new Error('Hoja no encontrada');
+        const err: any = new Error('Sheet not found');
         err.code = 404;
         throw err;
       }
 
       return sheet;
     } catch (error) {
-      return mapGoogleError(error, 'Error al acceder a Google Sheets');
+      return mapGoogleError(error, 'Error accessing Google Sheets');
     }
   }
 
@@ -97,7 +97,7 @@ export class GoogleSheetsShoppingRepository implements ShoppingRepository {
         bought: toBool(row.get('bought')), // booleano garantizado, false por defecto
       }));
     } catch (error) {
-      return mapGoogleError(error, 'Error al obtener la lista de compras');
+      return mapGoogleError(error, 'Error fetching shopping list');
     }
   }
 
@@ -115,7 +115,7 @@ export class GoogleSheetsShoppingRepository implements ShoppingRepository {
         bought: toSheetBool(item.bought),
       });
     } catch (error) {
-      mapGoogleError(error, 'Error al agregar el artículo');
+      mapGoogleError(error, 'Error adding the item');
     }
   }
 
@@ -138,7 +138,7 @@ export class GoogleSheetsShoppingRepository implements ShoppingRepository {
       row.set('bought', toSheetBool(item.bought));
       await row.save();
     } catch (error) {
-      mapGoogleError(error, 'Error al actualizar el artículo');
+      mapGoogleError(error, 'Error updating the item');
     }
   }
 }
