@@ -1,4 +1,4 @@
-import { defineConfig } from '@playwright/test';
+import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
   timeout: 30_000,
@@ -8,5 +8,7 @@ export default defineConfig({
     baseURL: process.env.BASE_URL, // se la pasaremos en CI
     headless: true,
   },
-  // Si quieres limitar a Chromium más adelante, añadiremos "projects"
+  projects: [
+    { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
+  ],
 });
