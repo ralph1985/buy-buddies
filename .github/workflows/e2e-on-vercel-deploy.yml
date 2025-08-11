@@ -33,7 +33,8 @@ jobs:
         run: npx playwright install --with-deps
 
       - name: Show deployed URL
-        run: echo "Testing URL: $BASE_URL"
+        run: |
+          echo "Testing URL: $BASE_URL"
 
       - name: Run E2E smoke
         run: npx playwright test --config=playwright.config.ts
