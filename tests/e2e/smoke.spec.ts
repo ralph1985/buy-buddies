@@ -1,7 +1,6 @@
-import { expect, test } from '@playwright/test';
+import { test, expect } from '@playwright/test';
 
-test('la home carga y tiene un título', async ({ page }) => {
-  await page.goto('/'); // usa baseURL desde la config
-  const title = await page.title();
-  expect(title.trim().length).toBeGreaterThan(0);
+test('la home carga y muestra el título correcto', async ({ page }) => {
+  await page.goto('/'); // usa BASE_URL desde la config
+  await expect(page).toHaveTitle('Buy Buddies');
 });

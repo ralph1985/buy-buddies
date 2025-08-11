@@ -1,0 +1,39 @@
+name: E2E on Vercel Deploy
+
+on:
+  deployment_status:
+
+permissions:
+  contents: read
+  deployments: read
+
+jobs:
+  e2e:
+    if: ${{ github.event.deployment_status.state == 'success' && github.event.deployment_status.target_url != '' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      BASE_URL: ${{ github.event.deployment_status.target_url }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install project deps (lockfile)
+        run: npm ci
+
+      # Si @playwright/test ya es devDependency, esto solo instala navegadores
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps
+
+      - name: Show deployed URL
+        run: echo "Testing URL: $BASE_URL"
+
+      - name: Run E2E smoke
+        run: npx playwright test --config=playwright.config.ts
