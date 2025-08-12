@@ -19,8 +19,8 @@
     "format": "prettier . --write",
     "format:check": "prettier . --check --log-level warn || echo '⚠️ Formato incorrecto, revisa con: npm run format'",
     "print:node": "node -v",
-    "preinstall": "node scripts/check-node-version.js",
-    "clean": "rm -rf node_modules dist .vite coverage && npm install",
+    "preinstall": "node scripts/check-node-version.js && lockfile-lint --path package-lock.json --type npm --validate-https --allowed-hosts npmjs.org registry.npmjs.org",
+    "clean": "rm -rf node_modules dist .vite coverage && npm ci",
     "e2e": "playwright test",
     "e2e:smoke": "playwright test tests/e2e/smoke.spec.ts"
   },
@@ -52,6 +52,7 @@
     "eslint-plugin-simple-import-sort": "12.1.1",
     "eslint-plugin-unicorn": "60.0.0",
     "happy-dom": "18.0.1",
+    "lockfile-lint": "4.14.1",
     "prettier": "3.6.2",
     "ts-node": "10.9.2",
     "typescript": "5.9.2",
