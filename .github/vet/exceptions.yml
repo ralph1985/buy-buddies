@@ -1,0 +1,54 @@
+# SafeDep vet exceptions file
+# This file contains exceptions for packages that we've reviewed and decided to allow
+
+version: 1
+
+exceptions:
+  # Allow unmaintained packages that are commonly used and stable
+  - package: "wrap-ansi"
+    reason: "Widely used package, functionality is stable"
+    
+  - package: "is-arrayish"
+    reason: "Small utility package, functionality is stable"
+    
+  - package: "argparse"
+    reason: "Stable package, used by lockfile-lint"
+    
+  - package: "error-ex"
+    reason: "Small utility package, functionality is stable"
+    
+  - package: "js-yaml"
+    reason: "Stable package, used by lockfile-lint"
+    
+  - package: "lines-and-columns"
+    reason: "Small utility package, functionality is stable"
+    
+  - package: "parse-json"
+    reason: "Stable package, functionality is stable"
+    
+  - package: "object-hash"
+    reason: "Stable package, functionality is stable"
+    
+  - package: "y18n"
+    reason: "Stable package, functionality is stable"
+    
+  - package: "esprima"
+    reason: "Stable JavaScript parser, functionality is stable"
+    
+  - package: "require-directory"
+    reason: "Small utility package, functionality is stable"
+    
+  - package: "sprintf-js"
+    reason: "Stable formatting package, functionality is stable"
+    
+  - package: "get-caller-file"
+    reason: "Small utility package, functionality is stable"
+    
+  - package: "env-paths"
+    reason: "Small utility package, functionality is stable"
+    
+  - package: "cosmiconfig"
+    reason: "Configuration management package, functionality is stable"
+    
+  - package: "@yarnpkg/parsers"
+    reason: "Official Yarn package, acceptable workflow risks"
