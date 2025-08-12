@@ -88,28 +88,35 @@ export class ShoppingFiltersElement extends LitElement {
 
   override render() {
     return html`
-      <button @click=${this.toggle}>${this.open ? 'Ocultar filtros' : 'Mostrar filtros'}</button>
+      <button data-test-id="filters-toggle-btn" @click=${this.toggle}>${
+        this.open ? 'Ocultar filtros' : 'Mostrar filtros'
+      }</button>
       ${this.open
         ? html`<div class="box">
             <md-outlined-text-field
+              data-test-id="filter-text"
               label="Buscar"
               .value=${this.filters.text || ''}
               @input=${this.onText}
             ></md-outlined-text-field>
-            <select @change=${this.onGroup}>
+            <select data-test-id="filter-group" @change=${this.onGroup}>
               <option value="">Todos los grupos</option>
-              ${this.groups.map((g) => html`<option value="${g}" ?selected=${this.filters.group === g}>${g}</option>`)}
+              ${this.groups.map(
+                (g) => html`<option value="${g}" ?selected=${this.filters.group === g}>${g}</option>`,
+              )}
             </select>
-            <select @change=${this.onCategory}>
+            <select data-test-id="filter-category" @change=${this.onCategory}>
               <option value="">Todas las categorías</option>
               ${this.categories.map(
                 (c) => html`<option value="${c}" ?selected=${this.filters.category === c}>${c}</option>`,
               )}
             </select>
-            <select @change=${this.onStatus}>
+            <select data-test-id="filter-status" @change=${this.onStatus}>
               <option value="todos" ?selected=${this.filters.status === 'todos'}>Todos</option>
               <option value="comprado" ?selected=${this.filters.status === 'comprado'}>Comprado</option>
-              <option value="no-comprado" ?selected=${this.filters.status === 'no-comprado'}>No comprado</option>
+              <option value="no-comprado" ?selected=${
+                this.filters.status === 'no-comprado'
+              }>No comprado</option>
             </select>
           </div>`
         : this.renderSummary()}

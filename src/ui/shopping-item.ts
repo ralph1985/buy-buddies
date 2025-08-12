@@ -55,7 +55,7 @@ export class ShoppingItemElement extends LitElement {
     return html`
       <div class="top">
         <div class="checkbox"><input type="checkbox" /></div>
-        <div class="title">${name}</div>
+        <div class="title" data-test-id="product-title">${name}</div>
         <div class="quantity">${quantity} ${unit}</div>
       </div>
       <div class="meta">${category} - ${group}</div>
