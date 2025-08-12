@@ -51,7 +51,8 @@ describe('app-root component', () => {
     const el = await fixture<AppRoot>(html`<app-root></app-root>`);
     await el.updateComplete;
 
-    const button = el.shadowRoot?.querySelector('header md-icon-button') as HTMLElement;
+    const header = el.shadowRoot?.querySelector('app-header') as HTMLElement;
+    const button = header.querySelector('md-icon-button') as HTMLElement;
     const drawer = el.shadowRoot?.querySelector('md-navigation-drawer') as HTMLElement & { opened: boolean };
 
     button.click();
@@ -79,7 +80,8 @@ describe('app-root component', () => {
     const el = await fixture<AppRoot>(html`<app-root></app-root>`);
     await el.updateComplete;
 
-    const menuButton = el.shadowRoot?.querySelector('header md-icon-button') as HTMLElement;
+    const header = el.shadowRoot?.querySelector('app-header') as HTMLElement;
+    const menuButton = header.querySelector('md-icon-button') as HTMLElement;
     const drawer = el.shadowRoot?.querySelector('md-navigation-drawer') as HTMLElement & { opened: boolean };
 
     menuButton.click();
