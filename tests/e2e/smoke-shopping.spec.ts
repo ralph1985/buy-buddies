@@ -25,24 +25,24 @@ test('lista y filtrado de productos con data-test-id', async ({ page, context, b
   }
 
   const totalLocator = page.getByTestId('total-counter');
-  await expect(totalLocator).toHaveText(/125 de 125/);
+  await expect(totalLocator).toHaveText(/10 de 10/);
 
   await page.getByTestId('filters-toggle-btn').click();
   await page.getByTestId('filter-text').locator('input').fill('agua');
-  await expect(totalLocator).toHaveText(/3 de 125/);
+  await expect(totalLocator).toHaveText(/1 de 10/);
 
-  await page.getByTestId('filter-category').selectOption({ label: 'Bebida' });
-  await expect(totalLocator).toHaveText(/2 de 125/);
+  await page.getByTestId('filter-category').selectOption({ label: 'Bebidas' });
+  await expect(totalLocator).toHaveText(/1 de 10/);
 
-  await page.getByTestId('filter-group').selectOption({ label: 'PM - Pedro y Marta' });
-  await expect(totalLocator).toHaveText(/1 de 125/);
+  await page.getByTestId('filter-group').selectOption({ label: 'Brigada Bebidas' });
+  await expect(totalLocator).toHaveText(/1 de 10/);
 
   const onlyItem = page.getByTestId('product-item');
   await expect(onlyItem).toHaveCount(1);
-  await expect(onlyItem.getByTestId('product-title')).toHaveText(/Agua con gas/i);
+  await expect(onlyItem.getByTestId('product-title')).toHaveText(/Agua/i);
 
   await page.getByTestId('filter-status').selectOption({ label: 'Comprado' });
-  await expect(totalLocator).toHaveText(/0 de 125/);
+  await expect(totalLocator).toHaveText(/0 de 10/);
   await expect(page.getByTestId('product-item')).toHaveCount(0);
 
   // Reset filtros
@@ -50,5 +50,5 @@ test('lista y filtrado de productos con data-test-id', async ({ page, context, b
   await page.getByTestId('filter-category').selectOption('');
   await page.getByTestId('filter-group').selectOption('');
   await page.getByTestId('filter-text').locator('input').fill('');
-  await expect(totalLocator).toHaveText(/125 de 125/);
+  await expect(totalLocator).toHaveText(/10 de 10/);
 });
