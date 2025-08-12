@@ -1,0 +1,32 @@
+name: SafeDep vet (PR/push + daily)
+
+on:
+  pull_request:
+  push:
+    branches: [ main ]
+  schedule:
+    - cron: "0 6 * * *"
+
+permissions:
+  contents: read
+  security-events: write
+  pull-requests: write
+
+jobs:
+  vet-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run SafeDep vet
+        id: vet
+        uses: safedep/vet-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload SARIF to Code Scanning
+        if: steps.vet.outputs.report != ''
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: ${{ steps.vet.outputs.report }}
+          category: vet
