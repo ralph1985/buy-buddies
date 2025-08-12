@@ -13,6 +13,7 @@ export default defineConfig({
     baseURL: process.env.BASE_URL, // se la pasaremos en CI
     headless: true,
     extraHTTPHeaders: extraHeaders,
+    testIdAttribute: 'data-test-id',
   },
   projects: [
     { name: 'chromium', use: { ...devices['Desktop Chrome'] } },

@@ -20,16 +20,16 @@ export class ConfigPage extends LitElement {
   `;
 
   @state()
-  private googleSheetId = '';
+  private googleSheetID = '';
 
   override connectedCallback() {
     super.connectedCallback();
-    this.googleSheetId = localStorage.getItem('googleSheetId') ?? '';
+    this.googleSheetID = localStorage.getItem('googleSheetID') ?? '';
   }
 
   private onInput(e: Event) {
-    this.googleSheetId = (e.target as HTMLInputElement).value;
-    localStorage.setItem('googleSheetId', this.googleSheetId);
+    this.googleSheetID = (e.target as HTMLInputElement).value;
+    localStorage.setItem('googleSheetID', this.googleSheetID);
   }
 
   private goHome() {
@@ -41,7 +41,7 @@ export class ConfigPage extends LitElement {
       <h1>Configuración</h1>
       <md-outlined-text-field
         label="Google Sheet ID"
-        .value=${this.googleSheetId}
+        .value=${this.googleSheetID}
         @input=${this.onInput}
       ></md-outlined-text-field>
       <button @click=${this.goHome}>Volver</button>
