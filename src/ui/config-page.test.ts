@@ -16,15 +16,15 @@ if (!customElements.get('md-outlined-text-field')) {
 }
 
 describe('config-page component', () => {
-  it('stores googleSheetId in localStorage', async () => {
+  it('stores googleSheetID in localStorage', async () => {
     localStorage.clear();
-    localStorage.setItem('googleSheetId', 'initial');
+    localStorage.setItem('googleSheetID', 'initial');
     const el = await fixture<any>(html`<config-page></config-page>`);
     await el.updateComplete;
     const input = el.shadowRoot!.querySelector('md-outlined-text-field') as any;
     expect(input.value).toBe('initial');
     input.value = 'new-id';
     input.dispatchEvent(new Event('input'));
-    expect(localStorage.getItem('googleSheetId')).toBe('new-id');
+    expect(localStorage.getItem('googleSheetID')).toBe('new-id');
   });
 });

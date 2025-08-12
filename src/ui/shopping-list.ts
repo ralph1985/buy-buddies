@@ -35,7 +35,7 @@ export class ShoppingList extends LitElement {
   }
 
   async load() {
-    const sheetId = localStorage.getItem('googleSheetId');
+    const sheetId = localStorage.getItem('googleSheetID');
     const url = sheetId ? `/api/shopping/get?googleSheetId=${encodeURIComponent(sheetId)}` : '/api/shopping/get';
     const res = await fetch(url);
     const jsonData = await res.json();
@@ -54,12 +54,15 @@ export class ShoppingList extends LitElement {
         .filters=${this.filters}
         @filters-changed=${(e: CustomEvent<ShoppingFilters>) => (this.filters = e.detail)}
       ></shopping-filters>
-      <div class="total">Total de productos: ${filtered.length} de ${(this.items || []).length}</div>
+      <div class="total" data-test-id="total-counter">
+        Total de productos: ${filtered.length} de ${(this.items || []).length}
+      </div>
       <div>
         ${repeat(
           filtered,
           (item) => item.id,
-          (item) => html`<shopping-item .item=${item}></shopping-item>`,
+          (item) =>
+            html`<shopping-item data-test-id="product-item" .item=${item}></shopping-item>`,
         )}
       </div>
     `;
