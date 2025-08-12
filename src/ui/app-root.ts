@@ -7,7 +7,9 @@ import './config-page.js';
 
 import { Router } from '@vaadin/router';
 import { css, html, LitElement } from 'lit';
-import { customElement, query } from 'lit/decorators.js';
+import { customElement, query, state } from 'lit/decorators.js';
+import { loadProducts } from '../domain/services/productsService.js';
+import './components/app-header.js';
 
 @customElement('app-root')
 export class AppRoot extends LitElement {
@@ -67,6 +69,12 @@ export class AppRoot extends LitElement {
 
   private router!: Router;
 
+  @state()
+  private products: unknown[] = [];
+
+  @state()
+  private isMockData = false;
+
   private get viteEnv(): string {
     return import.meta.env.VITE_ENV ?? '';
   }
@@ -75,12 +83,16 @@ export class AppRoot extends LitElement {
     return import.meta.env.VITE_BUGSNAG_KEY ?? '';
   }
 
-  override firstUpdated() {
+  override async firstUpdated() {
     this.router = new Router(this.shadowRoot!.getElementById('outlet') as HTMLElement);
     this.router.setRoutes([
       { path: '/', component: 'shopping-list' },
       { path: '/config', component: 'config-page' },
     ]);
+
+    const { items, isMockData } = await loadProducts();
+    this.products = items;
+    this.isMockData = isMockData;
   }
 
   private toggleDrawer = () => {
@@ -94,14 +106,16 @@ export class AppRoot extends LitElement {
 
   override render() {
     return html`
-      <header class="top-bar">
-        <md-icon-button @click=${this.toggleDrawer}>
-          <svg slot="icon" viewBox="0 0 24 24">
-            <path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"></path>
-          </svg>
-        </md-icon-button>
-        <div class="title">Buy Buddies</div>
-      </header>
+      <app-header .isMockData=${this.isMockData}>
+        <div class="top-bar">
+          <md-icon-button @click=${this.toggleDrawer}>
+            <svg slot="icon" viewBox="0 0 24 24">
+              <path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"></path>
+            </svg>
+          </md-icon-button>
+          <div class="title">Buy Buddies</div>
+        </div>
+      </app-header>
 
       <md-navigation-drawer type="modal">
         <div class="drawer-header">

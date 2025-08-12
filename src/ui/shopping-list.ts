@@ -35,7 +35,7 @@ export class ShoppingList extends LitElement {
   }
 
   async load() {
-    const sheetId = localStorage.getItem('googleSheetId');
+    const sheetId = localStorage.getItem('googleSheetID');
     const url = sheetId ? `/api/shopping/get?googleSheetId=${encodeURIComponent(sheetId)}` : '/api/shopping/get';
     const res = await fetch(url);
     const jsonData = await res.json();
