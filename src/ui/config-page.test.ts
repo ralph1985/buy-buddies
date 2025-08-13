@@ -59,4 +59,16 @@ describe('config-page component', () => {
     const stored = JSON.parse(localStorage.getItem('bb.cookieConsent.v1')!);
     expect(stored.analytics).toBe(false);
   });
+
+  it('renders a cookie section with named checkboxes', async () => {
+    localStorage.clear();
+    const el = await fixture<any>(html`<config-page></config-page>`);
+    await el.updateComplete;
+    const section = el.shadowRoot!.querySelector('[data-test-id="cookie-section"]');
+    expect(section).not.toBeNull();
+    const analytics = el.shadowRoot!.querySelector('[data-test-id="config-analytics"]');
+    const marketing = el.shadowRoot!.querySelector('[data-test-id="config-marketing"]');
+    expect(analytics?.getAttribute('name')).toBe('analytics');
+    expect(marketing?.getAttribute('name')).toBe('marketing');
+  });
 });
