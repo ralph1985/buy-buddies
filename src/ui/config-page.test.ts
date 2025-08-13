@@ -1,8 +1,8 @@
 import { fixture, html } from '@open-wc/testing';
-import { describe, expect, it } from 'vitest';
-import { vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 vi.mock('@material/web/textfield/outlined-text-field.js', () => ({}));
+vi.mock('@material/web/checkbox/checkbox.js', () => ({}));
 
 import './config-page.js';
 
@@ -11,6 +11,15 @@ if (!customElements.get('md-outlined-text-field')) {
     'md-outlined-text-field',
     class extends HTMLElement {
       value = '';
+    },
+  );
+}
+
+if (!customElements.get('md-checkbox')) {
+  customElements.define(
+    'md-checkbox',
+    class extends HTMLElement {
+      checked = false;
     },
   );
 }
@@ -26,5 +35,28 @@ describe('config-page component', () => {
     input.value = 'new-id';
     input.dispatchEvent(new Event('input'));
     expect(localStorage.getItem('googleSheetID')).toBe('new-id');
+  });
+
+  it('reflects and updates cookie consent', async () => {
+    localStorage.clear();
+    localStorage.setItem(
+      'bb.cookieConsent.v1',
+      JSON.stringify({
+        necessary: true,
+        analytics: true,
+        marketing: false,
+        timestamp: Date.now(),
+      }),
+    );
+    const el = await fixture<any>(html`<config-page></config-page>`);
+    await el.updateComplete;
+    const analytics = el.shadowRoot!.querySelector('[data-test-id="config-analytics"]') as any;
+    const marketing = el.shadowRoot!.querySelector('[data-test-id="config-marketing"]') as any;
+    expect(analytics.checked).toBe(true);
+    expect(marketing.checked).toBe(false);
+    analytics.checked = false;
+    analytics.dispatchEvent(new Event('change'));
+    const stored = JSON.parse(localStorage.getItem('bb.cookieConsent.v1')!);
+    expect(stored.analytics).toBe(false);
   });
 });
