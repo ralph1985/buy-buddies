@@ -1,8 +1,10 @@
 import '@material/web/textfield/outlined-text-field.js';
+import '@material/web/checkbox/checkbox.js';
 
 import { Router } from '@vaadin/router';
 import { css, html, LitElement } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
+import { getConsent, saveConsent } from '../domain/privacy/cookieConsent.js';
 
 @customElement('config-page')
 export class ConfigPage extends LitElement {
@@ -22,9 +24,20 @@ export class ConfigPage extends LitElement {
   @state()
   private googleSheetID = '';
 
+  @state()
+  private analytics = false;
+
+  @state()
+  private marketing = false;
+
   override connectedCallback() {
     super.connectedCallback();
     this.googleSheetID = localStorage.getItem('googleSheetID') ?? '';
+    const consent = getConsent();
+    if (consent) {
+      this.analytics = consent.analytics;
+      this.marketing = consent.marketing;
+    }
   }
 
   private onInput(e: Event) {
@@ -36,6 +49,25 @@ export class ConfigPage extends LitElement {
     Router.go('/');
   }
 
+  private updateConsent() {
+    saveConsent({
+      necessary: true,
+      analytics: this.analytics,
+      marketing: this.marketing,
+      timestamp: Date.now(),
+    });
+  }
+
+  private onAnalyticsChange(e: Event) {
+    this.analytics = (e.target as HTMLInputElement).checked;
+    this.updateConsent();
+  }
+
+  private onMarketingChange(e: Event) {
+    this.marketing = (e.target as HTMLInputElement).checked;
+    this.updateConsent();
+  }
+
   override render() {
     return html`
       <h1>Configuración</h1>
@@ -44,6 +76,20 @@ export class ConfigPage extends LitElement {
         .value=${this.googleSheetID}
         @input=${this.onInput}
       ></md-outlined-text-field>
+      <div>
+        <md-checkbox
+          ?checked=${this.analytics}
+          @change=${this.onAnalyticsChange}
+          data-test-id="config-analytics"
+        >Cookies analíticas</md-checkbox>
+      </div>
+      <div>
+        <md-checkbox
+          ?checked=${this.marketing}
+          @change=${this.onMarketingChange}
+          data-test-id="config-marketing"
+        >Cookies de marketing</md-checkbox>
+      </div>
       <button @click=${this.goHome}>Volver</button>
     `;
   }
