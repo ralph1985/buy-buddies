@@ -1,5 +1,8 @@
 import { LitElement, html, css } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { i18n } from '../../main.js';
+import type { Lang } from '../../domain/i18n/types.js';
+import '@material/web/iconbutton/icon-button.js';
 
 @customElement('app-header')
 export class AppHeader extends LitElement {
@@ -20,6 +23,7 @@ export class AppHeader extends LitElement {
   `;
 
   override render() {
+    const flag = i18n.getLang() === 'es' ? '🇪🇸' : '🇬🇧';
     return html`
       ${this.isMockData
         ? html`
@@ -35,9 +39,32 @@ export class AppHeader extends LitElement {
         : null}
       <header>
         <slot></slot>
+        <md-icon-button
+          data-test-id="lang-toggle"
+          aria-label="${
+            i18n.getLang() === 'es' ? 'Cambiar a inglés' : 'Switch to Spanish'
+          }"
+          title="${i18n.getLang() === 'es' ? 'Cambiar a inglés' : 'Switch to Spanish'}"
+          @click=${this.onToggleLang}
+        >
+          <span slot="icon">${flag}</span>
+        </md-icon-button>
       </header>
     `;
   }
+
+  private onToggleLang = () => {
+    const next: Lang = i18n.getLang() === 'es' ? 'en' : 'es';
+    i18n.setLang(next);
+    this.dispatchEvent(
+      new CustomEvent('lang-changed', {
+        detail: { lang: next },
+        bubbles: true,
+        composed: true,
+      }),
+    );
+    this.requestUpdate();
+  };
 }
 
 declare global {
