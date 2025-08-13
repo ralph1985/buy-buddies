@@ -19,6 +19,11 @@ export class ConfigPage extends LitElement {
       margin: 0;
       font-size: 1.5rem;
     }
+
+    h2 {
+      margin: 16px 0 8px;
+      font-size: 1.2rem;
+    }
   `;
 
   @state()
@@ -76,16 +81,29 @@ export class ConfigPage extends LitElement {
         .value=${this.googleSheetID}
         @input=${this.onInput}
       ></md-outlined-text-field>
-      <div>
-        <md-checkbox .checked=${this.analytics} @change=${this.onAnalyticsChange} data-test-id="config-analytics"
-          >Cookies analíticas</md-checkbox
-        >
-      </div>
-      <div>
-        <md-checkbox .checked=${this.marketing} @change=${this.onMarketingChange} data-test-id="config-marketing"
-          >Cookies de marketing</md-checkbox
-        >
-      </div>
+      <section aria-labelledby="cookie-settings" data-test-id="cookie-section">
+        <h2 id="cookie-settings">Cookies</h2>
+        <div>
+          <md-checkbox
+            name="analytics"
+            aria-label="Cookies analíticas"
+            .checked=${this.analytics}
+            @change=${this.onAnalyticsChange}
+            data-test-id="config-analytics"
+            >Cookies analíticas</md-checkbox
+          >
+        </div>
+        <div>
+          <md-checkbox
+            name="marketing"
+            aria-label="Cookies de marketing"
+            .checked=${this.marketing}
+            @change=${this.onMarketingChange}
+            data-test-id="config-marketing"
+            >Cookies de marketing</md-checkbox
+          >
+        </div>
+      </section>
       <button @click=${this.goHome}>Volver</button>
     `;
   }
