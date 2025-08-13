@@ -4,6 +4,7 @@ import '@material/web/list/list.js';
 import '@material/web/list/list-item.js';
 import './shopping-list.js';
 import './config-page.js';
+import { i18n } from '../main.js';
 
 import { Router } from '@vaadin/router';
 import { css, html, LitElement } from 'lit';
@@ -75,6 +76,8 @@ export class AppRoot extends LitElement {
   @state()
   private isMockData = false;
 
+  private _unsub?: () => void;
+
   private get viteEnv(): string {
     return import.meta.env.VITE_ENV ?? '';
   }
@@ -93,6 +96,16 @@ export class AppRoot extends LitElement {
     const { items, isMockData } = await loadProducts();
     this.products = items;
     this.isMockData = isMockData;
+  }
+
+  override connectedCallback() {
+    super.connectedCallback();
+    this._unsub = i18n.subscribe(() => this.requestUpdate());
+  }
+
+  override disconnectedCallback() {
+    this._unsub?.();
+    super.disconnectedCallback();
   }
 
   private toggleDrawer = () => {
@@ -129,8 +142,27 @@ export class AppRoot extends LitElement {
           </md-icon-button>
         </div>
         <md-list>
-          <md-list-item @click=${() => this.navigate('/')}>Lista</md-list-item>
-          <md-list-item @click=${() => this.navigate('/config')}>Configuración</md-list-item>
+          <md-list-item
+            data-test-id="menu-item-home"
+            @click=${() => this.navigate('/')}
+            >${i18n.t('menu.home')}</md-list-item
+          >
+          <md-list-item data-test-id="menu-item-products"
+            >${i18n.t('menu.products')}</md-list-item
+          >
+          <md-list-item
+            data-test-id="menu-item-list"
+            @click=${() => this.navigate('/')}
+            >${i18n.t('menu.list')}</md-list-item
+          >
+          <md-list-item data-test-id="menu-item-groups"
+            >${i18n.t('menu.groups')}</md-list-item
+          >
+          <md-list-item
+            data-test-id="menu-item-settings"
+            @click=${() => this.navigate('/config')}
+            >${i18n.t('menu.settings')}</md-list-item
+          >
         </md-list>
       </md-navigation-drawer>
 
