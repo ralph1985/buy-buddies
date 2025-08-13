@@ -1,12 +1,12 @@
 import { fixture, html } from '@open-wc/testing';
-import { beforeEach, describe, expect, it } from 'vitest';
-import { vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 vi.mock('@material/web/iconbutton/icon-button.js', () => ({}));
 vi.mock('@material/web/labs/navigationdrawer/navigation-drawer.js', () => ({}));
 vi.mock('@material/web/list/list.js', () => ({}));
 vi.mock('@material/web/list/list-item.js', () => ({}));
 vi.mock('@material/web/textfield/outlined-text-field.js', () => ({}));
+vi.mock('@material/web/checkbox/checkbox.js', () => ({}));
 
 import { AppRoot } from './app-root.js';
 
@@ -29,6 +29,14 @@ if (!customElements.get('md-list-item')) {
 }
 if (!customElements.get('md-outlined-text-field')) {
   customElements.define('md-outlined-text-field', class extends HTMLElement {});
+}
+if (!customElements.get('md-checkbox')) {
+  customElements.define(
+    'md-checkbox',
+    class extends HTMLElement {
+      checked = false;
+    },
+  );
 }
 
 declare global {
