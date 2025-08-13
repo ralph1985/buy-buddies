@@ -41,6 +41,16 @@ export class CookieConsentElement extends LitElement {
       font-weight: 600;
       margin-bottom: 4px;
     }
+
+    @media (max-width: 600px) {
+      .banner {
+        flex-direction: column;
+      }
+      .actions {
+        align-self: flex-end;
+        flex-wrap: wrap;
+      }
+    }
   `;
 
   @state() private open = false;

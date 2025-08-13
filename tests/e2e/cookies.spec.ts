@@ -24,4 +24,12 @@ test.describe('cookie banner', () => {
     await page.getByRole('button', { name: 'Guardar' }).click(); // por defecto ambos false
     await expect(page.getByTestId('cookie-banner')).toBeHidden();
   });
+
+  test('responsive on small screens', async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 667 });
+    const banner = page.getByTestId('cookie-banner');
+    await expect(banner).toBeVisible();
+    const direction = await banner.evaluate((el) => getComputedStyle(el).flexDirection);
+    expect(direction).toBe('column');
+  });
 });
