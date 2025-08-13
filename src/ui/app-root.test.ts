@@ -75,12 +75,12 @@ describe('app-root component', () => {
 
     const drawer = el.shadowRoot?.querySelector('md-navigation-drawer') as HTMLElement & { opened: boolean };
     drawer.opened = true;
-    const items = drawer.querySelectorAll('md-list-item');
-    (items[1] as HTMLElement).click();
+    const settings = drawer.querySelector('[data-test-id="menu-item-settings"]') as HTMLElement;
+    settings.click();
     await new Promise((r) => setTimeout(r));
 
     expect(window.location.pathname).toBe('/config');
-    expect(el.shadowRoot?.textContent).toContain('Configuración');
+    expect(el.shadowRoot?.textContent).toContain('Ajustes');
     // Environment variables may not be available in this test environment
   });
 
