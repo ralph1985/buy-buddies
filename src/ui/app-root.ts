@@ -4,6 +4,7 @@ import '@material/web/list/list.js';
 import '@material/web/list/list-item.js';
 import './shopping-list.js';
 import './config-page.js';
+import { i18n } from '../main.js';
 
 import { Router } from '@vaadin/router';
 import { css, html, LitElement } from 'lit';
@@ -75,6 +76,8 @@ export class AppRoot extends LitElement {
   @state()
   private isMockData = false;
 
+  private _unsub?: () => void;
+
   private get viteEnv(): string {
     return import.meta.env.VITE_ENV ?? '';
   }
@@ -95,6 +98,17 @@ export class AppRoot extends LitElement {
     this.isMockData = isMockData;
   }
 
+  override connectedCallback() {
+    super.connectedCallback();
+    // Re-render menu items whenever the selected language changes
+    this._unsub = i18n.subscribe(() => this.requestUpdate());
+  }
+
+  override disconnectedCallback() {
+    this._unsub?.();
+    super.disconnectedCallback();
+  }
+
   private toggleDrawer = () => {
     this.drawer.opened = !this.drawer.opened;
   };
@@ -108,7 +122,7 @@ export class AppRoot extends LitElement {
     return html`
       <app-header .isMockData=${this.isMockData}>
         <div class="top-bar">
-          <md-icon-button @click=${this.toggleDrawer}>
+          <md-icon-button data-test-id="drawer-toggle" @click=${this.toggleDrawer}>
             <svg slot="icon" viewBox="0 0 24 24">
               <path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"></path>
             </svg>
@@ -129,8 +143,27 @@ export class AppRoot extends LitElement {
           </md-icon-button>
         </div>
         <md-list>
-          <md-list-item @click=${() => this.navigate('/')}>Lista</md-list-item>
-          <md-list-item @click=${() => this.navigate('/config')}>Configuración</md-list-item>
+          <md-list-item
+            data-test-id="menu-item-home"
+            @click=${() => this.navigate('/')}
+            >${i18n.t('menu.home')}</md-list-item
+          >
+          <md-list-item data-test-id="menu-item-products"
+            >${i18n.t('menu.products')}</md-list-item
+          >
+          <md-list-item
+            data-test-id="menu-item-list"
+            @click=${() => this.navigate('/')}
+            >${i18n.t('menu.list')}</md-list-item
+          >
+          <md-list-item data-test-id="menu-item-groups"
+            >${i18n.t('menu.groups')}</md-list-item
+          >
+          <md-list-item
+            data-test-id="menu-item-settings"
+            @click=${() => this.navigate('/config')}
+            >${i18n.t('menu.settings')}</md-list-item
+          >
         </md-list>
       </md-navigation-drawer>
 
